@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const { TOKEN_KEY, TIME } = require('../config/config')
+const { TOKEN_KEY, TIME } = require('../../config/config')
 
 /**
  * 设置token
