@@ -14,6 +14,7 @@ const {queryFieldFormat,updateFieldFormat} = require('../utils/stringFormat')
  */
 const login = async username => {
     let queryArr = [
+        queryFieldFormat(TableUser.UserId()),
         queryFieldFormat(TableUser.UserName()),
         TableUser.Salt,
         TableUser.Password,
@@ -65,7 +66,30 @@ const updateLoginTime = async (updateData) => {
     await mysql.queryOne(selectSql, updateDataArr)
 }
 
+/**
+ * 获取用户信息
+ * @param userId 用户id
+ * @returns {Promise<unknown>}
+ */
+const getUserInfo = async userId => {
+    let queryArr = [
+        queryFieldFormat(TableUser.UserId()),
+        queryFieldFormat(TableUser.UserName()),
+        queryFieldFormat(TableUser.UserType()),
+        TableUser.Avatar,
+        TableUser.Signature,
+        queryFieldFormat(TableUser.LastLoginDate())
+    ]
+
+    let selectSql = `select ${queryArr.join(',')} from ${TableUser.TableName} where ${TableUser.UserId()} = '${userId}'`
+
+    let result = await mysql.queryOne(selectSql)
+
+    return result
+}
+
 module.exports = {
     login,
-    updateLoginTime
+    updateLoginTime,
+    getUserInfo
 }

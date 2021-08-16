@@ -26,6 +26,31 @@ const login = async (req, res) => {
     }
 }
 
+/**
+ * 获取用户信息
+ * @returns {Promise<void>}
+ */
+const getUserInfo = async (req, res) => {
+    try {
+        let {userId} = req.data
+
+        if (!userId) {
+            userId = req.query
+        }
+
+        if (!userId.trim()) {
+            return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
+        }
+
+        let result = await userService.getUserInfo(userId)
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: e}))
+    }
+}
+
 module.exports = {
-    login
+    login,
+    getUserInfo
 }

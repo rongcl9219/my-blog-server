@@ -58,11 +58,23 @@ const login = async (username, password) => {
     let lastLoginDate = dateFormat('yyyy-MM-dd hh:mm:ss', new Date())
     await userModel.updateLoginTime({loginTime, username, lastLoginDate})
 
-    const token = await createToken(userInfo.username)
+    const token = await createToken(userInfo.username, userInfo.userId)
 
     return success({token})
 }
 
+/**
+ * 获取用户信息
+ * @param userId 用户id
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const getUserInfo = async userId => {
+    const userInfo = await userModel.getUserInfo(userId)
+
+    return success({userInfo})
+}
+
 module.exports = {
-    login
+    login,
+    getUserInfo
 }

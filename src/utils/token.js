@@ -4,11 +4,13 @@ const { TOKEN_KEY, TIME } = require('../../config/config')
 /**
  * 生成token
  * @param {String} username 用户名
+ * @param {String} userId id
  * @returns {Promise<unknown>}
  */
-const createToken = username => {
+const createToken = (username, userId) => {
     return new Promise((resolve) => {
         let token = jwt.sign({
+            userId: userId,
             name: username,
             createDate: new Date().getTime()
         }, TOKEN_KEY, {expiresIn: TIME.DAY})

@@ -7,4 +7,9 @@ const { userController } = require('../../controllers/index')
  */
 router.post('/login', userController.login)
 
+/**
+ * 获取用户信息
+ */
+router.get('/getUserInfo', userController.getUserInfo)
+
 module.exports = router;
