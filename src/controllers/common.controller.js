@@ -2,20 +2,23 @@
  * @description userController
  */
 
-const { commonService } = require('../services/index')
+const {commonService} = require('../services/index')
+const statusCode = require('../utils/statusCode')
+const {successResult, failResult, returnResult} = require('../utils/resultHelper')
 
-const checkToken = async (req, res) => {
+/**
+ * 生成登录验证码
+ */
+const initValidCode = (req, res) => {
+    try {
+        const result = commonService.validCode()
 
-    // 调用service层
-    let data = await commonService.checkToken('test')
-
-    return res.json({
-        code: 200,
-        msg: 'test',
-        data: data
-    })
+        return res.json(returnResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: e}))
+    }
 }
 
 module.exports = {
-    checkToken
+    initValidCode
 }

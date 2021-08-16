@@ -2,16 +2,17 @@
  * @description commonService
  */
 
-const { commonModel } = require('../models/index')
+const {commonModel} = require('../models/index')
+const {dateFormat, initValidCode} = require('../utils/tool')
+const {success} = require("../utils/resultHelper");
 
-const checkToken = async () => {
-    // 调用model层
-    let userList = await commonModel.checkToken()
-    return {
-        userList
-    }
+/**
+ * 生成验证码
+ */
+const validCode = () => {
+    return success({validCode: initValidCode(4, true)})
 }
 
 module.exports = {
-    checkToken
+    validCode
 }

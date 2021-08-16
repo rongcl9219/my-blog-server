@@ -26,6 +26,38 @@ const dateFormat = (fmt, date) => {
     return fmt
 }
 
+/**
+ * 生成随机数
+ * @param num 随机数长度
+ * @param isArray 是否返回数组
+ * @param special 是否包含特殊字符
+ * @returns {string|*[]}
+ */
+const initValidCode = (num = 4, isArray = false, special = false) => {
+    let char = 'ABCDEFGHJKMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+    let specialChar = ["!", "@", "#", "$", "?", "|", "{", "/", ":", ";",
+        "%", "^", "&", "*", "(", ")", "-", "_", "[", "]",
+        "}", "<", ">", "~", "+", "=", ",", "."].join('')
+
+    let newChar = char + (special ? specialChar : '')
+
+    if (!isArray) {
+        let codeStr = ''
+        for (let i = 0; i < num; i++) {
+            codeStr += newChar.charAt(Math.floor(Math.random() * newChar.length))
+        }
+        return codeStr
+    } else {
+        let codeArr = []
+        for (let i = 0; i < num; i++) {
+            codeArr.push(newChar.charAt(Math.floor(Math.random() * newChar.length)))
+        }
+        return codeArr
+    }
+}
+
 module.exports = {
-    dateFormat
+    dateFormat,
+    initValidCode
 }
