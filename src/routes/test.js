@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { testController } = require('../controller/index')
+const { testController } = require('../controllers/index')
 
 /**
  * 测试

@@ -1,4 +1,8 @@
-const { testService } = require('../service/index')
+/**
+ * @description controller层，用于参数校验和返回数据
+ */
+
+const { testService } = require('../services/index')
 
 const test = async (req, res, next) => {
 

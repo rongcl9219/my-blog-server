@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const { userController } = require('../../controllers/index')
 
 /**
- * 注册用户
+ * 用户登录
  */
-router.post('/user/register', async (req, res) => {
-
-})
+router.post('/login', userController.login)
 
 module.exports = router;

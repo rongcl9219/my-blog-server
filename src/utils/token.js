@@ -1,20 +1,17 @@
 const jwt = require('jsonwebtoken')
-
 const { TOKEN_KEY, TIME } = require('../../config/config')
 
 /**
- * 设置token
+ * 生成token
  * @param {String} username 用户名
- * @param {String} userId 用户id
- * @param {Number} exp 过期时间(默认为一天)
  * @returns {Promise<unknown>}
  */
-exports.setToken = (username, userId, exp) => {
-    return new Promise((resolve, reject) => {
-        const token = jwt.sign({
-            user_name: username,
-            user_id: userId 
-        }, TOKEN_KEY, {expiresIn: exp || TIME.DAY});
+const createToken = username => {
+    return new Promise((resolve) => {
+        let token = jwt.sign({
+            name: username,
+            createDate: new Date().getTime()
+        }, TOKEN_KEY, {expiresIn: TIME.DAY})
         resolve(token)
     })
 }
@@ -24,9 +21,14 @@ exports.setToken = (username, userId, exp) => {
  * @param {String} token
  * @returns {Promise<unknown>}
  */
- exports.verToken = function (token) {
-    return new Promise((resolve, reject) => {
+const verifyToken = token => {
+    return new Promise((resolve) => {
         let info = jwt.verify(token.split(' ')[1], TOKEN_KEY)
         resolve(info)
     })
+}
+
+module.exports = {
+    createToken,
+    verifyToken
 }

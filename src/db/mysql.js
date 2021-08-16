@@ -8,9 +8,9 @@ const pool = mysql.createPool(DATABASE)
  * @param sqlArr (需要执行的sql语句数组)
  * @returns {Promise<unknown>}
  */
- const execTransection = (sqlArr) => {
+const execTransaction = (sqlArr) => {
     return new Promise((resolve, reject) => {
-        var promiseArr = [];
+        let promiseArr = [];
         pool.getConnection((err, connection) => {
             if (err) {
                 return reject(err)
@@ -150,5 +150,5 @@ module.exports = {
     query,
     queryOne,
     queryCount,
-    execTransection
+    execTransaction
 }
