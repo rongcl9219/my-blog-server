@@ -15,10 +15,26 @@ const initValidCode = (req, res) => {
 
         return res.json(returnResult(result))
     } catch (e) {
-        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: e}))
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
+/**
+ * token过期刷新token
+ */
+const refreshToken = async (req, res) => {
+    try {
+        const userId = req.data.userId
+
+        const result = commonService.refreshToken(userId)
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
     }
 }
 
 module.exports = {
-    initValidCode
+    initValidCode,
+    refreshToken
 }

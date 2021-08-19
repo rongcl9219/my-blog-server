@@ -22,7 +22,7 @@ const login = async (req, res) => {
 
         return res.json(returnResult(result))
     } catch (e) {
-        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: e}))
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
     }
 }
 
@@ -32,13 +32,9 @@ const login = async (req, res) => {
  */
 const getUserInfo = async (req, res) => {
     try {
-        let {userId} = req.data
+        let {userId} = req.data || req.query
 
-        if (!userId) {
-            userId = req.query
-        }
-
-        if (!userId.trim()) {
+        if (!userId || !userId.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 
@@ -46,11 +42,30 @@ const getUserInfo = async (req, res) => {
 
         return res.json(returnResult(result))
     } catch (e) {
-        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: e}))
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
+/**
+ * 退出登录
+ */
+const loginOut = async (req, res) => {
+    try {
+        const token = req.headers['authorization'] || ''
+
+        if (token) {
+            const accessToken = token.split(' ')[1]
+            await userService.loginOut(accessToken)
+        }
+
+        return res.json(successResult())
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
     }
 }
 
 module.exports = {
     login,
-    getUserInfo
+    getUserInfo,
+    loginOut
 }

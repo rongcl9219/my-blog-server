@@ -50,6 +50,28 @@ class User {
     static Password = 'password'
 
     /**
+     * 访问接口使用的token
+     * @param isHump
+     * @returns {string|string}
+     * @constructor
+     */
+    static AccessToken(isHump = false) {
+        const field = 'access_token'
+        return isHump ? snakeToHump(field) : field
+    }
+
+    /**
+     * access_token过期后用于刷续期的token
+     * @param isHump
+     * @returns {string|string}
+     * @constructor
+     */
+    static RefreshToken(isHump = false) {
+        const field = 'refresh_token'
+        return isHump ? snakeToHump(field) : field
+    }
+
+    /**
      * 盐值
      * @type {string}
      */

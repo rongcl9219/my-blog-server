@@ -1,9 +1,8 @@
 /**
  * @description userService
  */
-
 const {userModel} = require('../models/index')
-const {passwordEqual} = require('../utils/encrypt')
+const {passwordEqual, encryptToken} = require('../utils/encrypt')
 const {fail, success} = require('../utils/resultHelper')
 const statusCode = require('../utils/statusCode')
 const {createToken} = require('../utils/token')
@@ -58,9 +57,14 @@ const login = async (username, password) => {
     let lastLoginDate = dateFormat('yyyy-MM-dd hh:mm:ss', new Date())
     await userModel.updateLoginTime({loginTime, username, lastLoginDate})
 
-    const token = await createToken(userInfo.username, userInfo.userId)
+    const token = await createToken(userInfo.userId)
 
-    return success({token})
+    await userModel.updateToken(userInfo.userId, {
+        accessToken: encryptToken(token.accessToken),
+        refreshToken: encryptToken(token.refreshToken)
+    })
+
+    return success(token)
 }
 
 /**
@@ -74,7 +78,18 @@ const getUserInfo = async userId => {
     return success({userInfo})
 }
 
+/**
+ * 退出登录
+ * @param accessToken
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const loginOut = async accessToken => {
+    await userModel.loginOut(encryptToken(accessToken))
+    return success()
+}
+
 module.exports = {
     login,
-    getUserInfo
+    getUserInfo,
+    loginOut
 }

@@ -1,13 +1,10 @@
 const express = require('express')
+const {userController} = require("../../controllers/index");
 const router = express.Router()
 
-router.get('/', async (req, res) => {
-    return res.json({
-        code: 200,
-        msg: 'success'
-    })
-})
+/**
+ * 获取用户信息
+ */
+router.get('/getUserInfo', userController.getUserInfo)
 
-router.post('/user/addUser', async (req, res) => {
-    
-})
+module.exports = router;

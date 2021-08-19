@@ -1,4 +1,5 @@
 const crypto = require('crypto')
+const {TOKEN_KEY} = require('../../config/config')
 
 /**
  * 生成明文密码哈希和盐值
@@ -39,7 +40,23 @@ const passwordEqual = (password, salt, hash) => {
     return false
 }
 
+/**
+ * token加密
+ * @param token
+ * @returns {string}
+ */
+const encryptToken = (token) => {
+    const md5 = crypto.createHash('md5')
+    // 将密码拼接上任意长度的随机字符串后，再进行 Hash
+    md5.update(token + TOKEN_KEY)
+
+    const md5Token = md5.digest('hex')
+
+    return md5Token
+}
+
 module.exports = {
     encrypt,
-    passwordEqual
+    passwordEqual,
+    encryptToken
 }

@@ -7,4 +7,9 @@ const { commonController } = require('../../controllers/index')
  */
 router.get('/validCode', commonController.initValidCode)
 
+/**
+ * 刷新token
+ */
+router.post('/refreshToken', commonController.refreshToken)
+
 module.exports = router;

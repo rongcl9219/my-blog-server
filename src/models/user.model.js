@@ -61,9 +61,20 @@ const updateLoginTime = async (updateData) => {
 
     updateDataArr.push(username)
 
-    let selectSql = `update ${TableUser.TableName} set ${updateArr.join(',')} where ${TableUser.UserName()} = ?`
+    let updateSql = `update ${TableUser.TableName} set ${updateArr.join(',')} where ${TableUser.UserName()} = ?`
 
-    await mysql.queryOne(selectSql, updateDataArr)
+    await mysql.queryOne(updateSql, updateDataArr)
+}
+
+/**
+ * 修改token
+ * @param userId 用户id
+ * @returns {Promise<void>}
+ */
+const updateToken = async (userId, {accessToken = '', refreshToken = ''}) => {
+    let updateSql = `update ${TableUser.TableName} set ${updateFieldFormat(TableUser.AccessToken())}, ${updateFieldFormat(TableUser.RefreshToken())} where ${TableUser.UserId()} = ?`
+
+    await mysql.queryOne(updateSql, [accessToken, refreshToken, userId])
 }
 
 /**
@@ -88,8 +99,21 @@ const getUserInfo = async userId => {
     return result
 }
 
+/**
+ * 退出登录
+ * @param accessToken
+ * @returns {Promise<void>}
+ */
+const loginOut = async accessToken => {
+    let updateSql = `update ${TableUser.TableName} set ${updateFieldFormat(TableUser.AccessToken())}, ${updateFieldFormat(TableUser.RefreshToken())} where ${TableUser.AccessToken()} = ?`
+
+    await mysql.queryOne(updateSql, ['', '', accessToken])
+}
+
 module.exports = {
     login,
     updateLoginTime,
-    getUserInfo
+    getUserInfo,
+    updateToken,
+    loginOut
 }

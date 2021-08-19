@@ -7,6 +7,8 @@ CREATE TABLE `user` (
   `user_name` varchar(255) NOT NULL COMMENT '用户名',
   `user_type` int(2) NOT NULL DEFAULT '1' COMMENT '用户类型(1-普通用户, 2-管理员)',
   `password` varchar(255) NOT NULL COMMENT '用户密码',
+  `access_token` varchar(255) DEFAULT '' COMMENT '访问接口使用的token',
+  `refresh_token` varchar(255) DEFAULT '' COMMENT 'access_token过期后用于刷续期的token',
   `salt` varchar(255) NOT NULL COMMENT '盐值',
   `cleartext_password` varchar(255) NOT NULL COMMENT '明文密码',
   `email` varchar(255) DEFAULT '' COMMENT '用户邮箱',

@@ -8,8 +8,8 @@ const { userController } = require('../../controllers/index')
 router.post('/login', userController.login)
 
 /**
- * 获取用户信息
+ * 用户退出登录
  */
-router.get('/getUserInfo', userController.getUserInfo)
+router.post('/loginOut', userController.loginOut)
 
 module.exports = router;

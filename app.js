@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require("body-parser");
 const expressJwt = require('express-jwt');
-const {verifyToken} = require('./src/utils/token')
+const {verifyToken,checkRefreshToken} = require('./src/utils/token')
 const {TOKEN_KEY} = require('./config/config')
 const {TOKEN_INVALID} = require('./src/utils/statusCode')
 
@@ -39,33 +39,37 @@ app.all("*", function (req, res, next) {
 
 // 解析token获取用户信息
 app.use(function (req, res, next) {
-    let token = req.headers['authorization']
-    if (!token) {
-        return next()
-    } else {
-      verifyToken(token).then((data) => {
-            req.data = data
-            return next()
-        }).catch(() => {
-            return next()
-        })
-    }
-})
-
-//验证token是否过期并规定哪些路由不用验证
-app.use(expressJwt({
-    secret: TOKEN_KEY, // 密匙
-    algorithms: ['HS256'] // 加密方式
-}).unless((req) => {
-    // 自定义验证规则
     let path = req.path
     // 验证以 /admin 开头的所有请求
     if (/^(\/admin)/.test(path)) {
-        return false
+        let token = req.headers['authorization']
+        if (!token) {
+            return next()
+        } else {
+            verifyToken(token).then((data) => {
+                req.data = data
+                return next()
+            }).catch(() => {
+                return res.json({
+                    code: TOKEN_INVALID,
+                    msg: '无效的token'
+                })
+            })
+        }
+    } else if (path === '/refreshToken') {
+        const token = req.headers['authorization']
+        checkRefreshToken(token).then(() => {
+            return next()
+        }).catch(() => {
+            return res.json({
+                code: TOKEN_INVALID,
+                msg: '无效的token'
+            })
+        })
     } else {
-        return true
+        next()
     }
-}))
+})
 
 app.use('/', homeRouter);
 app.use('/test', testRouter);
