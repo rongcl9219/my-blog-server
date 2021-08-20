@@ -21,7 +21,7 @@ const createToken = userId => {
             accessToken: md5.update(accessToken).digest('hex'),
             userId: userId,
             createDate: new Date().getTime()
-        }, TOKEN_KEY, {expiresIn: TIME.MINUTE * 15})
+        }, TOKEN_KEY, {expiresIn: TIME.HOUR * 2})
 
         resolve({accessToken, refreshToken})
     })
