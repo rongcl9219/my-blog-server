@@ -58,7 +58,8 @@ app.use(function (req, res, next) {
         }
     } else if (path === '/refreshToken') {
         const token = req.headers['authorization']
-        checkRefreshToken(token).then(() => {
+        checkRefreshToken(token).then((data) => {
+            req.data = data
             return next()
         }).catch(() => {
             return res.json({

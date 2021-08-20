@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { commonController } = require('../../controllers/index')
+const {commonController} = require('../../controllers/index')
 
 /**
  * 获取登录验证码

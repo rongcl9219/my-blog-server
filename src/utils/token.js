@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const {TOKEN_KEY, TIME} = require('../../config/config')
-
-const {checkToken} = require('../services/common.service')
+const {encryptToken} = require('../utils/encrypt')
+const {checkToken} = require('../models/common.model')
 
 /**
  * 生成token
@@ -37,8 +37,8 @@ const verifyToken = token => {
         let accessToken = token.split(' ')[1]
         let info = jwt.verify(accessToken, TOKEN_KEY)
 
-        checkToken(info.userId, accessToken).then(flag => {
-            if (flag) {
+        checkToken(info.userId).then(tokenInfo => {
+            if (encryptToken(accessToken) === tokenInfo.accessToken) {
                 resolve(info)
             } else {
                 reject()
@@ -71,8 +71,8 @@ const checkRefreshToken = (token) => {
                 reject()
             }
 
-            checkToken(info.userId, refreshToken, 2).then(flag => {
-                if (flag) {
+            checkToken(info.userId).then(tokenInfo => {
+                if (encryptToken(refreshToken) === tokenInfo.refreshToken) {
                     resolve(info)
                 } else {
                     reject()

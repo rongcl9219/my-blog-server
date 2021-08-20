@@ -26,7 +26,7 @@ const refreshToken = async (req, res) => {
     try {
         const userId = req.data.userId
 
-        const result = commonService.refreshToken(userId)
+        const result = await commonService.refreshToken(userId)
 
         return res.json(returnResult(result))
     } catch (e) {
