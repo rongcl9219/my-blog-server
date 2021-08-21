@@ -7,4 +7,9 @@ const router = express.Router()
  */
 router.get('/getUserInfo', userController.getUserInfo)
 
+/**
+ * 修改密码
+ */
+router.post('/updatePassword', userController.updatePassword)
+
 module.exports = router;

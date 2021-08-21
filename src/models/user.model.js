@@ -110,10 +110,52 @@ const loginOut = async accessToken => {
     await mysql.queryOne(updateSql, ['', '', accessToken])
 }
 
+/**
+ * 检查密码
+ * @param userId
+ * @returns {Promise<unknown>}
+ */
+const checkPassword = async userId => {
+    let queryArr = [
+        TableUser.Salt,
+        TableUser.Password
+    ]
+
+    let selectSql = `select ${queryArr.join(',')} from ${TableUser.TableName} where ${TableUser.UserId()} = '${userId}'`
+
+    let result = await mysql.queryOne(selectSql)
+
+    return result
+}
+
+/**
+ * 修改密码
+ * @param userId 用户id
+ * @param cleartextPassword 明文密码
+ * @param password 密文密码
+ * @param salt 盐值
+ * @returns {Promise<void>}
+ */
+const updatePassword = async (userId, cleartextPassword, {password, salt}) => {
+    let updateArr = [
+        updateFieldFormat(TableUser.Password),
+        updateFieldFormat(TableUser.CleartextPassword()),
+        updateFieldFormat(TableUser.Salt),
+        updateFieldFormat(TableUser.AccessToken()),
+        updateFieldFormat(TableUser.RefreshToken())
+    ]
+
+    let updateSql = `update ${TableUser.TableName} set ${updateArr.join(',')} where ${TableUser.UserId()} = ?`
+
+    await mysql.query(updateSql, [password, cleartextPassword, salt, '', '', userId])
+}
+
 module.exports = {
     login,
     updateLoginTime,
     getUserInfo,
     updateToken,
-    loginOut
+    loginOut,
+    checkPassword,
+    updatePassword
 }

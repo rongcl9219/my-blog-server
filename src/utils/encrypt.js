@@ -8,7 +8,7 @@ const {TOKEN_KEY} = require('../../config/config')
  */
 const encrypt = (password) => {
     // 生成随机的盐值
-    const salt = crypto.randomBytes(256)
+    const salt = crypto.randomBytes(16).toString('hex')
     const md5 = crypto.createHash('md5')
     // 将密码拼接上任意长度的随机字符串后，再进行 Hash
     md5.update(password + salt)

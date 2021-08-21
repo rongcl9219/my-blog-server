@@ -2,7 +2,7 @@
  * @description userService
  */
 const {userModel} = require('../models/index')
-const {passwordEqual, encryptToken} = require('../utils/encrypt')
+const {passwordEqual, encryptToken, encrypt} = require('../utils/encrypt')
 const {fail, success} = require('../utils/resultHelper')
 const statusCode = require('../utils/statusCode')
 const {createToken} = require('../utils/token')
@@ -88,8 +88,31 @@ const loginOut = async accessToken => {
     return success()
 }
 
+/**
+ * 修改密码
+ * @param userId 用户id
+ * @param newPass 用户新密码
+ * @param oldPass 用户旧密码
+ * @returns {Promise<{msg: string, code: number, flag: boolean}|{data: string, flag: boolean}>}
+ */
+const updatePassword = async (userId, newPass, oldPass) => {
+    const userInfo = await userModel.checkPassword(userId)
+
+    // 判断旧密码是否正确
+    if (!passwordEqual(oldPass, userInfo.salt, userInfo.password)) {
+        return fail('旧密码错误')
+    }
+
+    let encryptData = encrypt(newPass)
+
+    await userModel.updatePassword(userId, newPass, encryptData)
+
+    return success()
+}
+
 module.exports = {
     login,
     getUserInfo,
-    loginOut
+    loginOut,
+    updatePassword
 }

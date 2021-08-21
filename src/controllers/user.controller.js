@@ -64,8 +64,34 @@ const loginOut = async (req, res) => {
     }
 }
 
+/**
+ * 修改密码
+ */
+const updatePassword = async (req, res) => {
+    try {
+        let {oldPass, newPass, checkPass} = req.body
+
+        let {userId} = req.data
+
+        if (!newPass.trim() || newPass !== checkPass) {
+            return res.json({
+                code: statusCode.FAIL,
+                msg: '两次密码输入不一致'
+            })
+        }
+        await userService.updatePassword(userId, newPass, oldPass)
+        return res.json({
+            code: statusCode.SUCCESS,
+            msg: 'success'
+        })
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     login,
     getUserInfo,
-    loginOut
+    loginOut,
+    updatePassword
 }
