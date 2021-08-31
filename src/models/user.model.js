@@ -89,6 +89,7 @@ const getUserInfo = async userId => {
         queryFieldFormat(TableUser.UserType()),
         TableUser.Avatar,
         TableUser.Signature,
+        TableUser.Email,
         queryFieldFormat(TableUser.LastLoginDate())
     ]
 
@@ -150,6 +151,26 @@ const updatePassword = async (userId, cleartextPassword, {password, salt}) => {
     await mysql.query(updateSql, [password, cleartextPassword, salt, '', '', userId])
 }
 
+/**
+ * 修改用户信息
+ * @param avatar 头像
+ * @param signature 个性签名
+ * @param email 邮箱
+ * @param userId 用户id
+ * @returns {Promise<void>}
+ */
+const updateUserInfo = async (avatar, signature, email, userId) => {
+    let updateArr = [
+        updateFieldFormat(TableUser.Avatar),
+        updateFieldFormat(TableUser.Signature),
+        updateFieldFormat(TableUser.Email)
+    ]
+
+    let updateSql = `update ${TableUser.TableName} set ${updateArr.join(',')} where ${TableUser.UserId()} = ?`
+
+    await mysql.query(updateSql, [avatar, signature, email, userId])
+}
+
 module.exports = {
     login,
     updateLoginTime,
@@ -157,5 +178,6 @@ module.exports = {
     updateToken,
     loginOut,
     checkPassword,
-    updatePassword
+    updatePassword,
+    updateUserInfo
 }

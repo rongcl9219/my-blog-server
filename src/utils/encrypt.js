@@ -9,11 +9,8 @@ const {TOKEN_KEY} = require('../../config/config')
 const encrypt = (password) => {
     // 生成随机的盐值
     const salt = crypto.randomBytes(16).toString('hex')
-    const md5 = crypto.createHash('md5')
-    // 将密码拼接上任意长度的随机字符串后，再进行 Hash
-    md5.update(password + salt)
 
-    const newPassword = md5.digest('hex')
+    const newPassword = md5(password + salt)
 
     return {
         password: newPassword,
@@ -29,9 +26,7 @@ const encrypt = (password) => {
  * @returns {Boolean}
  */
 const passwordEqual = (password, salt, hash) => {
-    const md5 = crypto.createHash('md5')
-    md5.update(password + salt)
-    const newHash = md5.digest('hex')
+    const newHash = md5(password + salt)
 
     if (newHash === hash) {
         return true
@@ -46,17 +41,23 @@ const passwordEqual = (password, salt, hash) => {
  * @returns {string}
  */
 const encryptToken = (token) => {
-    const md5 = crypto.createHash('md5')
-    // 将密码拼接上任意长度的随机字符串后，再进行 Hash
-    md5.update(token + TOKEN_KEY)
-
-    const md5Token = md5.digest('hex')
+    const md5Token = md5(token + TOKEN_KEY)
 
     return md5Token
+}
+
+/**
+ * md5加密
+ * @param str 需要加密的字符串
+ * @returns {string}
+ */
+const md5 = (str, key = '') => {
+    return crypto.createHash('md5', key).update(String(str)).digest('hex')
 }
 
 module.exports = {
     encrypt,
     passwordEqual,
-    encryptToken
+    encryptToken,
+    md5
 }

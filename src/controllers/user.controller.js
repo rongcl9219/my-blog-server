@@ -80,10 +80,28 @@ const updatePassword = async (req, res) => {
             })
         }
         await userService.updatePassword(userId, newPass, oldPass)
-        return res.json({
-            code: statusCode.SUCCESS,
-            msg: 'success'
-        })
+        return res.json(successResult())
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
+/**
+ * 修改用户信息
+ * @returns {Promise<*>}
+ */
+const updateUserInfo = async (req, res) => {
+    try {
+        let {avatar, signature, email, userId} = req.body
+
+        if (!avatar.trim() || !signature.trim() || !email.trim() || !userId.trim()) {
+            return res.json({
+                code: statusCode.PARAMS_INVALID,
+                msg: '参数错误'
+            })
+        }
+        await userService.updateUserInfo(avatar, signature, email, userId)
+        return res.json(successResult())
     } catch (e) {
         return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
     }
@@ -93,5 +111,6 @@ module.exports = {
     login,
     getUserInfo,
     loginOut,
-    updatePassword
+    updatePassword,
+    updateUserInfo
 }

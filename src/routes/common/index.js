@@ -12,4 +12,9 @@ router.get('/validCode', commonController.initValidCode)
  */
 router.post('/refreshToken', commonController.refreshToken)
 
+/**
+ * 获取上传token
+ */
+router.post('/getUploadToken', commonController.getUploadToken)
+
 module.exports = router;

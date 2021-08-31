@@ -12,4 +12,9 @@ router.get('/getUserInfo', userController.getUserInfo)
  */
 router.post('/updatePassword', userController.updatePassword)
 
+/**
+ * 修改用户信息
+ */
+router.post('/updateUserInfo', userController.updateUserInfo)
+
 module.exports = router;

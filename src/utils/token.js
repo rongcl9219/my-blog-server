@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
 const {TOKEN_KEY, TIME} = require('../../config/config')
-const {encryptToken} = require('../utils/encrypt')
+const {encryptToken, md5} = require('../utils/encrypt')
 const {checkToken} = require('../models/common.model')
 
 /**
@@ -10,7 +9,6 @@ const {checkToken} = require('../models/common.model')
  * @returns {Promise<unknown>}
  */
 const createToken = userId => {
-    const md5 = crypto.createHmac('md5', TOKEN_KEY)
     return new Promise((resolve) => {
         const accessToken = jwt.sign({
             userId: userId,
@@ -18,7 +16,7 @@ const createToken = userId => {
         }, TOKEN_KEY, {expiresIn: TIME.MINUTE * 10})
 
         const refreshToken = jwt.sign({
-            accessToken: md5.update(accessToken).digest('hex'),
+            accessToken: md5(accessToken, TOKEN_KEY),
             userId: userId,
             createDate: new Date().getTime()
         }, TOKEN_KEY, {expiresIn: TIME.HOUR * 2})
@@ -58,14 +56,13 @@ const checkRefreshToken = (token) => {
             if (!token) {
                 reject()
             }
-            const md5 = crypto.createHmac('md5', TOKEN_KEY)
             const accessToken = token.split(' ')[1]
             const refreshToken = token.split(' ')[2]
             if (!accessToken || !refreshToken) {
                 reject()
             }
             const info = jwt.verify(refreshToken, TOKEN_KEY)
-            const accessTokenMd5 = md5.update(accessToken).digest('hex')
+            const accessTokenMd5 = md5(accessToken, TOKEN_KEY)
 
             if (info.accessToken !== accessTokenMd5) {
                 reject()

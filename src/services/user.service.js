@@ -7,6 +7,7 @@ const {fail, success} = require('../utils/resultHelper')
 const statusCode = require('../utils/statusCode')
 const {createToken} = require('../utils/token')
 const {dateFormat} = require('../utils/tool')
+const {getFileUrl} = require('../utils/qiniu')
 
 /**
  * 登录
@@ -75,6 +76,8 @@ const login = async (username, password) => {
 const getUserInfo = async userId => {
     const userInfo = await userModel.getUserInfo(userId)
 
+    userInfo.avatarUrl = getFileUrl(userInfo.avatar, true, '', 'avatar')
+
     return success({userInfo})
 }
 
@@ -110,9 +113,24 @@ const updatePassword = async (userId, newPass, oldPass) => {
     return success()
 }
 
+/**
+ * 修改用户信息
+ * @param avatar 头像
+ * @param signature 个性签名
+ * @param email 邮箱
+ * @param userId 用户id
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const updateUserInfo = async (avatar, signature, email, userId) => {
+    await userModel.updateUserInfo(avatar, signature, email, userId)
+
+    return success()
+}
+
 module.exports = {
     login,
     getUserInfo,
     loginOut,
-    updatePassword
+    updatePassword,
+    updateUserInfo
 }

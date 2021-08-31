@@ -34,7 +34,27 @@ const refreshToken = async (req, res) => {
     }
 }
 
+/**
+ * 获取上传token
+ */
+const getUploadToken = (req, res) => {
+    try {
+        let {keys, thumbnail = ''} = req.body
+
+        if (!keys) {
+            return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
+        }
+
+        const result = commonService.getUploadToken(keys, thumbnail)
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     initValidCode,
-    refreshToken
+    refreshToken,
+    getUploadToken
 }
