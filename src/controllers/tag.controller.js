@@ -1,19 +1,19 @@
 /**
- * @description classController
+ * @description tagController
  */
 
 const statusCode = require('../utils/statusCode')
-const {classService} = require('../services/index')
+const {tagService} = require('../services/index')
 const {successResult, failResult, returnResult} = require('../utils/resultHelper')
 
 /**
- * 获取分类列表
+ * 获取标签列表
  */
-const getClassList = async (req, res) => {
+const getTagList = async (req, res) => {
     try {
         let {page = 1, pageSize = 10} = req.query
 
-        let result = await classService.getClassList(page, pageSize)
+        let result = await tagService.getTagList(page, pageSize)
 
         return res.json(returnResult(result))
     } catch (e) {
@@ -22,17 +22,17 @@ const getClassList = async (req, res) => {
 }
 
 /**
- * 新增分类
+ * 新建标签
  */
-const newClass = async (req, res) => {
+const newTag = async (req, res) => {
     try {
-        let {classCode, className, classType = 0, classDesc = ''} = req.body
+        let {tagName, classType, tagDesc = ''} = req.body
 
-        if (!classCode.trim() || !className.trim()) {
+        if (!tagName.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 
-        await classService.newClass(classCode, className, classType, classDesc)
+        await tagService.newTag(tagName, classType, tagDesc)
 
         return res.json(successResult())
     } catch (e) {
@@ -41,17 +41,17 @@ const newClass = async (req, res) => {
 }
 
 /**
- * 修改分类
+ * 修改标签
  */
-const updateClass = async (req, res) => {
+const updateTag = async (req, res) => {
     try {
-        let {classId, classCode, className, classType = 0, classDesc = ''} = req.body
+        let {tagId, tagName, classType, tagDesc = ''} = req.body
 
-        if (!classId || !classCode.trim() || !className.trim()) {
+        if (!tagId || !tagName.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 
-        await classService.updateClass(classId, classCode, className, classType, classDesc)
+        await tagService.updateTag(tagId, tagName, classType, tagDesc)
 
         return res.json(successResult())
     } catch (e) {
@@ -60,17 +60,17 @@ const updateClass = async (req, res) => {
 }
 
 /**
- * 删除分类
+ * 删除标签
  */
-const deleteClass = async (req, res) => {
+const deleteTag = async (req, res) => {
     try {
-        let {classId} = req.body
+        let {tagId} = req.body
 
-        if (!classId) {
+        if (!tagId) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 
-        await classService.deleteClass(classId)
+        await tagService.deleteTag(tagId)
 
         return res.json(successResult())
     } catch (e) {
@@ -79,17 +79,17 @@ const deleteClass = async (req, res) => {
 }
 
 /**
- * 获取分类信息
+ * 获取标签信息
  */
-const getClassInfo = async (req, res) => {
+const getTagInfo = async (req, res) => {
     try {
-        let {classId} = req.query
+        let {tagId} = req.query
 
-        if (!classId) {
+        if (!tagId) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 
-        let result = await classService.getClassInfo(classId)
+        let result = await tagService.getTagInfo(tagId)
 
         return res.json(returnResult(result))
     } catch (e) {
@@ -97,24 +97,12 @@ const getClassInfo = async (req, res) => {
     }
 }
 
-/**
- * 获取所有分类
- */
-const getAllClass = async (req, res) => {
-    try {
-        let result = await classService.getAllClass()
-
-        return res.json(returnResult(result))
-    } catch (e) {
-        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
-    }
-}
 
 module.exports = {
-    getClassList,
-    newClass,
-    updateClass,
-    deleteClass,
-    getClassInfo,
-    getAllClass
+    getTagList,
+    newTag,
+    updateTag,
+    deleteTag,
+    getTagInfo
 }
+

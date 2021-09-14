@@ -3,8 +3,7 @@
  */
 
 const {classModel} = require('../models/index')
-const {fail, success} = require('../utils/resultHelper')
-const statusCode = require('../utils/statusCode')
+const {success} = require('../utils/resultHelper')
 const {dateFormat, checkNumber} = require('../utils/tool')
 
 /**
@@ -91,10 +90,21 @@ const getClassInfo = async classId => {
     return success(result)
 }
 
+/**
+ * 获取所有分类
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const getAllClass = async () => {
+    let result = await classModel.getAllClass()
+
+    return success(result)
+}
+
 module.exports = {
     getClassList,
     newClass,
     updateClass,
     deleteClass,
-    getClassInfo
+    getClassInfo,
+    getAllClass
 }

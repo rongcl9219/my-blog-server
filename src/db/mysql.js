@@ -62,6 +62,7 @@ const execTransaction = (sqlArr) => {
  * @returns {Promise<unknown>}
  */
 const query = (sql, values) => {
+    console.log(sql)
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
             if (err) {
@@ -92,6 +93,7 @@ const query = (sql, values) => {
 }
 
 const queryOne = (sql, values) => {
+    console.log(sql)
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
             if (err) {
@@ -122,6 +124,7 @@ const queryOne = (sql, values) => {
 }
 
 const queryCount = (sql, values) => {
+    console.log(sql)
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
             if (err) {

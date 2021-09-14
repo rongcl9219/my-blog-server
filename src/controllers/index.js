@@ -6,9 +6,12 @@ const commonController = require('./common.controller')
 
 const classController = require('./class.controller')
 
+const tagController = require('./tag.controller')
+
 module.exports = {
     testController,
     userController,
     commonController,
-    classController
+    classController,
+    tagController
 }

@@ -9,9 +9,12 @@ const userService = require('./user.service')
 
 const classService = require('./class.service')
 
+const tagService = require('./tag.service')
+
 module.exports = {
     testService,
     commonService,
     userService,
-    classService
+    classService,
+    tagService
 }

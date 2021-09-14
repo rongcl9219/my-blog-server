@@ -9,9 +9,12 @@ const userModel = require('./user.model')
 
 const classModel = require('./class.model')
 
+const tagModle = require('./tag.model')
+
 module.exports = {
     testModel,
     commonModel,
     userModel,
-    classModel
+    classModel,
+    tagModle
 }

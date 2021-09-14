@@ -4,12 +4,11 @@
 
 const mysql = require('../db/mysql')
 const TableClass = require('../db/dataBase/table_class')
-const {queryFieldFormat,updateFieldFormat} = require('../utils/stringFormat')
+const {queryFieldFormat, updateFieldFormat} = require('../utils/stringFormat')
 const {dateFormat} = require('../utils/tool')
-const {resume_up} = require("qiniu");
 
 /**
- * 获取分裂列表
+ * 获取分类列表
  * @param page 当前页数
  * @param pageSize 每页数量
  * @returns {Promise<{total: number, classList: unknown}>}
@@ -129,10 +128,30 @@ const getClassInfo = async classId => {
     return result
 }
 
+/**
+ * 获取所有分类
+ * @returns {Promise<*>}
+ */
+const getAllClass = async () => {
+    let selectArr = [
+        queryFieldFormat(TableClass.ClassId()),
+        queryFieldFormat(TableClass.ClassCode()),
+        queryFieldFormat(TableClass.ClassName()),
+        queryFieldFormat(TableClass.ClassType())
+    ]
+
+    let selectSql = `select ${selectArr.join(',')} from ${TableClass.TableName}`
+
+    let classList = await mysql.query(selectSql)
+
+    return classList
+}
+
 module.exports = {
     getClassList,
     newClass,
     updateClass,
     deleteClass,
-    getClassInfo
+    getClassInfo,
+    getAllClass
 }
