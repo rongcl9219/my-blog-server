@@ -110,3 +110,13 @@ CREATE TABLE `comment` (
   KEY `idx_status` (`status`) USING BTREE,
   KEY `index_query` (`article_id`,`is_delete`,`status`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='文章评论表';
+
+-- ----------------------------
+-- Table structure for web_info
+-- ----------------------------
+DROP TABLE IF EXISTS `web_info`;
+CREATE TABLE `web_info` (
+  `param_key` varchar(255) NOT NULL DEFAULT '' COMMENT '参数名(主键)',
+  `param_value` varchar(255) NOT NULL DEFAULT '' COMMENT '参数值',
+  PRIMARY KEY (`param_key`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;

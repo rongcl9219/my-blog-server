@@ -11,10 +11,13 @@ const classService = require('./class.service')
 
 const tagService = require('./tag.service')
 
+const webInfoService = require('./webInfo.service')
+
 module.exports = {
     testService,
     commonService,
     userService,
     classService,
-    tagService
+    tagService,
+    webInfoService
 }

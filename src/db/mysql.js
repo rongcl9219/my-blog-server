@@ -24,6 +24,7 @@ const execTransaction = (sqlArr) => {
                 promiseArr = sqlArr.map(({sql, values}) => {
                     return new Promise((resolve, reject) => {
                         connection.query(sql, values, (e, rows) => {
+                            console.log(sql);
                             if (e) {
                                 reject(e)
                             } else {

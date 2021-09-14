@@ -8,10 +8,13 @@ const classController = require('./class.controller')
 
 const tagController = require('./tag.controller')
 
+const webInfoController = require('./webInfo.controller')
+
 module.exports = {
     testController,
     userController,
     commonController,
     classController,
-    tagController
+    tagController,
+    webInfoController
 }

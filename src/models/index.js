@@ -11,10 +11,13 @@ const classModel = require('./class.model')
 
 const tagModle = require('./tag.model')
 
+const webInfoModel = require('./webInfo.model')
+
 module.exports = {
     testModel,
     commonModel,
     userModel,
     classModel,
-    tagModle
+    tagModle,
+    webInfoModel
 }
