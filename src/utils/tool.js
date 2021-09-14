@@ -57,7 +57,23 @@ const initValidCode = (num = 4, isArray = false, special = false) => {
     }
 }
 
+/**
+ *
+ * @param num
+ * @returns {number}
+ */
+const checkNumber = num => {
+    let newNum = Number(num)
+
+    if (isNaN(newNum)) {
+        newNum = 0
+    }
+
+    return newNum
+}
+
 module.exports = {
     dateFormat,
-    initValidCode
+    initValidCode,
+    checkNumber
 }

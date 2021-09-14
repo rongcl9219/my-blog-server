@@ -56,6 +56,11 @@ const execTransaction = (sqlArr) => {
     })
 }
 
+/**
+ * @param sql
+ * @param values
+ * @returns {Promise<unknown>}
+ */
 const query = (sql, values) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
