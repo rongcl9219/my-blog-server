@@ -14,7 +14,7 @@ const createToken = userId => {
         const accessToken = jwt.sign({
             userId: userId,
             createDate: createDate
-        }, TOKEN_KEY, {expiresIn: TIME.SECOND * 10})
+        }, TOKEN_KEY, {expiresIn: TIME.MINUTE * 30})
 
         const refreshToken = jwt.sign({
             accessToken: md5(accessToken, TOKEN_KEY),
@@ -22,7 +22,7 @@ const createToken = userId => {
             createDate: createDate
         }, TOKEN_KEY, {expiresIn: TIME.DAY})
 
-        resolve({accessToken, refreshToken, exp: TIME.SECOND * 10 * 1000})
+        resolve({accessToken, refreshToken, exp: TIME.MINUTE * 30 * 1000})
     })
 }
 
