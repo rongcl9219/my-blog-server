@@ -4,9 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require("body-parser");
-const expressJwt = require('express-jwt');
-const {verifyToken,checkRefreshToken} = require('./src/utils/token')
-const {TOKEN_KEY} = require('./config/config')
+const {verifyToken, checkRefreshToken} = require('./src/utils/token')
 const {TOKEN_INVALID} = require('./src/utils/statusCode')
 
 const {adminRouter, homeRouter, testRouter} = require('./src/routes/index');

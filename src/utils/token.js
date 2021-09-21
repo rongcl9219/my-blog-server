@@ -10,18 +10,19 @@ const {checkToken} = require('../models/common.model')
  */
 const createToken = userId => {
     return new Promise((resolve) => {
+        const createDate = new Date().getTime()
         const accessToken = jwt.sign({
             userId: userId,
-            createDate: new Date().getTime()
-        }, TOKEN_KEY, {expiresIn: TIME.MINUTE * 10})
+            createDate: createDate
+        }, TOKEN_KEY, {expiresIn: TIME.SECOND * 10})
 
         const refreshToken = jwt.sign({
             accessToken: md5(accessToken, TOKEN_KEY),
             userId: userId,
-            createDate: new Date().getTime()
-        }, TOKEN_KEY, {expiresIn: TIME.HOUR * 2})
+            createDate: createDate
+        }, TOKEN_KEY, {expiresIn: TIME.DAY})
 
-        resolve({accessToken, refreshToken})
+        resolve({accessToken, refreshToken, exp: TIME.SECOND * 10 * 1000})
     })
 }
 
