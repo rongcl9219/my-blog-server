@@ -6,7 +6,7 @@ const {articleService} = require('../services/index')
 const {successResult, failResult, returnResult} = require('../utils/resultHelper')
 
 /**
- * 取文章列表
+ * 获取文章列表
  */
 const getArticleList = async (req, res) => {
     try {

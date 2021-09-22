@@ -27,9 +27,4 @@ router.post('/deleteClass', classController.deleteClass)
  */
 router.get('/getClassInfo', classController.getClassInfo)
 
-/**
- * 获取全部
- */
-router.get('/getAllClass', classController.getAllClass)
-
 module.exports = router;
