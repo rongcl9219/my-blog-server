@@ -1,8 +1,8 @@
 /**
  * @description commonService
  */
-const {commonModel, userModel} = require('../models/index')
-const {dateFormat, initValidCode} = require('../utils/tool')
+const {userModel} = require('../models/index')
+const {initValidCode} = require('../utils/tool')
 const {success} = require("../utils/resultHelper")
 const {createToken} = require('../utils/token')
 const {encryptToken} = require('../utils/encrypt')

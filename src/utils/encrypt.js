@@ -1,5 +1,6 @@
 const crypto = require('crypto')
-const {TOKEN_KEY} = require('../../config/config')
+const {TOKEN_KEY} = require('../../../config/config')
+const Uuid = require('uuid')
 
 /**
  * 生成明文密码哈希和盐值
@@ -55,9 +56,18 @@ const md5 = (str, key = '') => {
     return crypto.createHash('md5', key).update(String(str)).digest('hex')
 }
 
+/**
+ * 生成uuid
+ * @returns {*}
+ */
+const uuid = () => {
+    return Uuid.v1().replace(/-/g, '')
+}
+
 module.exports = {
     encrypt,
     passwordEqual,
     encryptToken,
-    md5
+    md5,
+    uuid
 }

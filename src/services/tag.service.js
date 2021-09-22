@@ -88,10 +88,21 @@ const getTagInfo = async tagId => {
     return success(result)
 }
 
+/**
+ * 获取所有标签
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const getAllTag = async () => {
+    let result = await tagModle.getAllTag()
+
+    return success(result)
+}
+
 module.exports = {
     getTagList,
     newTag,
     updateTag,
     deleteTag,
-    getTagInfo
+    getTagInfo,
+    getAllTag
 }

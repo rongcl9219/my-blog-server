@@ -1,5 +1,5 @@
 const qiniu = require('qiniu');
-const {QI_NIU} = require('../../config/config')
+const {QI_NIU} = require('../../../config/config')
 const uuid = require('uuid')
 const {md5} = require('./encrypt')
 

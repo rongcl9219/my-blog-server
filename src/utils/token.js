@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {TOKEN_KEY, TIME} = require('../../config/config')
+const {TOKEN_KEY, TIME} = require('../../../config/config')
 const {encryptToken, md5} = require('../utils/encrypt')
 const {checkToken} = require('../models/common.model')
 

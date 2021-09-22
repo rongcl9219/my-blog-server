@@ -122,10 +122,40 @@ const getTagInfo = async tagId => {
     return result
 }
 
+/**
+ * 获取所有标签
+ * @param tagIds 标签id数组
+ * @returns {Promise<*>}
+ */
+const getAllTag = async (tagIds) => {
+    let selectArr = [
+        queryFieldFormat(TableTag.TagId()),
+        queryFieldFormat(TableTag.TagName()),
+        queryFieldFormat(TableTag.ClassType()),
+        queryFieldFormat(TableTag.TagDesc()),
+        queryFieldFormat(TableTag.CreateDate())
+    ]
+
+    let selectSql = `select ${selectArr.join(',')} from ${TableTag.TableName}`
+
+    let selectData = []
+
+    if (Array.isArray(tagIds) && tagIds.length > 0) {
+        selectSql += ` where ${TableTag.TagId()} in (?)`
+
+        selectData.push(tagIds)
+    }
+
+    let tagList = await mysql.query(selectSql, selectData)
+
+    return tagList
+}
+
 module.exports = {
     getTagList,
     newTag,
     updateTag,
     deleteTag,
-    getTagInfo
+    getTagInfo,
+    getAllTag
 }

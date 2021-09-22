@@ -97,12 +97,25 @@ const getTagInfo = async (req, res) => {
     }
 }
 
+/**
+ * 获取所有标签
+ */
+const getAllTag = async (req, res) => {
+    try {
+        let result = await tagService.getAllTag()
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
 
 module.exports = {
     getTagList,
     newTag,
     updateTag,
     deleteTag,
-    getTagInfo
+    getTagInfo,
+    getAllTag
 }
 

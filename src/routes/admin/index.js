@@ -12,7 +12,9 @@ const adminTag = require('./tag')
 
 const webInfo = require('./webInfo')
 
+const article = require('./article')
+
 // 合并后台模块路由
-router.stack = router.stack.concat(adminUser.stack, adminClass.stack, adminTag.stack, webInfo.stack)
+router.stack = router.stack.concat(adminUser.stack, adminClass.stack, adminTag.stack, webInfo.stack, article.stack)
 
 module.exports = router

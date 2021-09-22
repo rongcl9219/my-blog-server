@@ -13,11 +13,14 @@ const tagService = require('./tag.service')
 
 const webInfoService = require('./webInfo.service')
 
+const articleService = require('./article.service')
+
 module.exports = {
     testService,
     commonService,
     userService,
     classService,
     tagService,
-    webInfoService
+    webInfoService,
+    articleService
 }

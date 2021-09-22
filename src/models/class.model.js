@@ -130,9 +130,10 @@ const getClassInfo = async classId => {
 
 /**
  * 获取所有分类
+ * @param classIds 分类id数组
  * @returns {Promise<*>}
  */
-const getAllClass = async () => {
+const getAllClass = async (classIds) => {
     let selectArr = [
         queryFieldFormat(TableClass.ClassId()),
         queryFieldFormat(TableClass.ClassCode()),
@@ -142,7 +143,15 @@ const getAllClass = async () => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableClass.TableName}`
 
-    let classList = await mysql.query(selectSql)
+    let selectData = []
+
+    if (Array.isArray(classIds) && classIds.length > 0) {
+        selectSql += ` where ${TableClass.ClassId()} in (?)`
+
+        selectData.push(classIds)
+    }
+
+    let classList = await mysql.query(selectSql, selectData)
 
     return classList
 }
