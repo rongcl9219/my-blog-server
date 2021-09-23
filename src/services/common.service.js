@@ -43,6 +43,7 @@ const getUploadToken = (keys, thumbnail) => {
 
     keyArr.map(key => {
         tokenArr.push({
+            key: key,
             token: createUploadToken(key),
             url: getFileUrl(key, true, '', thumbnail)
         })

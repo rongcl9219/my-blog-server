@@ -42,13 +42,13 @@ const getArticleList = async (page, pageSize, query, classType, tagType, article
     let whereData = []
 
     if (articleStatus === 0) { // 未删除
-        whereStr += ` ${TableArticle.IsDelete()} = 0 `
+        whereStr += ` and ${TableArticle.IsDelete()} = 0 `
     } else if (articleStatus === 1) { // 已发布
-        whereStr += ` ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1 `
+        whereStr += ` and ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1 `
     } else if (articleStatus === 2) { // 未发布
-        whereStr += ` ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 0 `
+        whereStr += ` and ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 0 `
     } else if (articleStatus  === 3) { // 已删除
-        whereStr += ` ${TableArticle.IsDelete()} = 1 `
+        whereStr += ` and ${TableArticle.IsDelete()} = 1 `
     }
 
     if (!!classType) {
@@ -99,7 +99,7 @@ const newArticle = async (newInfo) => {
         TableArticle.CreateDate()
     ]
 
-    let insertSql = `insert into ${TableArticle.TableName} (${insertArr.join(',')}) valuse (?,?,?,?,?,?,?,?,?,?,?)`
+    let insertSql = `insert into ${TableArticle.TableName} (${insertArr.join(',')}) values (?,?,?,?,?,?,?,?,?,?,?)`
 
     let insertData = [
         uuid(),

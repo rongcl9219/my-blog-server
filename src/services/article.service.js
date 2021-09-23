@@ -20,7 +20,7 @@ const {getFileUrl} = require('../utils/qiniu')
 const getArticleList = async (page, pageSize, query, classType, tagType, articleStatus) => {
     page = checkNumber(page)
     pageSize = checkNumber(pageSize)
-
+    articleStatus = checkNumber(articleStatus)
     let pageNum = (page - 1) * pageSize
 
     let result = await articleModel.getArticleList(pageNum, pageSize, query, classType, tagType, articleStatus)
@@ -67,7 +67,7 @@ const newArticle = async (newInfo) => {
 
     let userInfo = await userModel.getUserInfo(userId)
 
-    newInfo.username = userInfo.username
+    newInfo.username = userInfo.userName
 
     await articleModel.newArticle(newInfo)
 
