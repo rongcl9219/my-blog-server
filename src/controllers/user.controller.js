@@ -92,9 +92,9 @@ const updatePassword = async (req, res) => {
  */
 const updateUserInfo = async (req, res) => {
     try {
-        let {avatar, signature, email, userId} = req.body
+        let {avatar = '', signature = '', email = '', userId} = req.body
 
-        if (!avatar.trim() || !signature.trim() || !email.trim() || !userId.trim()) {
+        if (!userId.trim()) {
             return res.json({
                 code: statusCode.PARAMS_INVALID,
                 msg: '参数错误'
