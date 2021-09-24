@@ -107,10 +107,24 @@ const updateUserInfo = async (req, res) => {
     }
 }
 
+/**
+ * 初始化管理员
+ * @returns {Promise<*>}
+ */
+const initAdmin = async (req, res) => {
+    try {
+        let result = await userService.initAdmin()
+        return res.json(returnResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     login,
     getUserInfo,
     loginOut,
     updatePassword,
-    updateUserInfo
+    updateUserInfo,
+    initAdmin
 }

@@ -6,6 +6,7 @@ const mysql = require('../db/mysql')
 const TableUser = require('../db/dataBase/table_user')
 
 const {queryFieldFormat,updateFieldFormat} = require('../utils/stringFormat')
+const {dateFormat} = require("../utils/tool");
 
 /**
  * 登录
@@ -171,6 +172,59 @@ const updateUserInfo = async (avatar, signature, email, userId) => {
     await mysql.query(updateSql, [avatar, signature, email, userId])
 }
 
+/**
+ * 新增用户
+ * @param userInfo
+ * @returns {Promise<void>}
+ */
+const newUser = async userInfo => {
+    const {userId, username, userType, password, salt, cleartextPassword, status, email = '', avatar = '', signature = ''} = userInfo
+
+    let insertArr = [
+        TableUser.UserId(),
+        TableUser.UserName(),
+        TableUser.UserType(),
+        TableUser.Password,
+        TableUser.Salt,
+        TableUser.CleartextPassword(),
+        TableUser.Status,
+        TableUser.Email,
+        TableUser.Avatar,
+        TableUser.Signature,
+        TableUser.CreateDate()
+    ]
+
+    let insertSql = `insert into ${TableUser.TableName} (${insertArr.join(',')}) values (?,?,?,?,?,?,?,?,?,?,?)`
+
+    let insertData = [
+        userId,
+        username,
+        userType,
+        password,
+        salt,
+        cleartextPassword,
+        status,
+        email,
+        avatar,
+        signature,
+        dateFormat('yyyy-MM-dd hh:mm:ss', new Date())
+    ]
+
+    await mysql.query(insertSql, insertData)
+}
+
+/**
+ * 检查管理员
+ * @returns {Promise<unknown>}
+ */
+const checkAdmin = async () => {
+    let selectSql = `select ${queryFieldFormat(TableUser.UserId())} from ${TableUser.TableName} where ${TableUser.UserName()} = 'admin'`
+
+    let result = await mysql.queryOne(selectSql)
+
+    return result
+}
+
 module.exports = {
     login,
     updateLoginTime,
@@ -179,5 +233,7 @@ module.exports = {
     loginOut,
     checkPassword,
     updatePassword,
-    updateUserInfo
+    updateUserInfo,
+    newUser,
+    checkAdmin
 }

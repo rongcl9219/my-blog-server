@@ -12,4 +12,9 @@ router.post('/login', userController.login)
  */
 router.post('/loginOut', userController.loginOut)
 
+/**
+ * 初始化管理员
+ */
+router.post('/initAdmin', userController.initAdmin)
+
 module.exports = router;

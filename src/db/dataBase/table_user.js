@@ -154,7 +154,7 @@ class User {
      * 账号状态(0为正常，默认0)
      * @type {string}
      */
-    static status = 'status'
+    static Status = 'status'
 }
 
 module.exports = User

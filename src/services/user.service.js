@@ -8,6 +8,8 @@ const statusCode = require('../utils/statusCode')
 const {createToken} = require('../utils/token')
 const {dateFormat} = require('../utils/tool')
 const {getFileUrl} = require('../utils/qiniu')
+const {uuid} = require('../utils/encrypt')
+const {DEFAULT_PASSWORD} = require('../../../config/config')
 
 /**
  * 登录
@@ -127,10 +129,42 @@ const updateUserInfo = async (avatar, signature, email, userId) => {
     return success()
 }
 
+/**
+ * 初始化管理员
+ * @returns {Promise<{msg: string, code: number, flag: boolean}|{data: string, flag: boolean}>}
+ */
+const initAdmin = async () => {
+    let checkInfo = await userModel.checkAdmin()
+
+    if (checkInfo) {
+        return fail('管理员已初始化')
+    }
+
+    let encryptData = encrypt(DEFAULT_PASSWORD)
+
+    let userInfo = {
+        userId: uuid(),
+        username: 'admin',
+        userType: 2,
+        password: encryptData.password,
+        salt: encryptData.salt,
+        cleartextPassword: DEFAULT_PASSWORD,
+        status: 0
+    }
+
+    await userModel.newUser(userInfo)
+
+    return success({
+        username: 'admin',
+        password: DEFAULT_PASSWORD
+    })
+}
+
 module.exports = {
     login,
     getUserInfo,
     loginOut,
     updatePassword,
-    updateUserInfo
+    updateUserInfo,
+    initAdmin
 }

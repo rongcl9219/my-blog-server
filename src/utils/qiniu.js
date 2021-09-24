@@ -50,6 +50,9 @@ let bucketManager = new qiniu.rs.BucketManager(mac, config);
  * @returns {string}
  */
 function getFileUrl(key, isImg, fName, thumbnail) {
+    if (!key) {
+        return ''
+    }
     let paramStr = ''
     if (isImg) {
         if (thumbnail.trim()) {
