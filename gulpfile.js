@@ -53,4 +53,4 @@ gulp.task('zip', function () {
         .pipe(gulp.dest('dist'));
 })
 
-gulp.task('build', gulp.series('clean', gulp.parallel('bin', 'public', 'src', 'views', 'others'), 'zip'))
+gulp.task('build', gulp.series('clean', gulp.parallel('bin', 'public', 'src', 'views', 'others')))

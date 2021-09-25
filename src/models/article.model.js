@@ -221,6 +221,7 @@ const getArticleInfo = async articleId => {
         queryFieldFormat(TableArticle.ArticleKeyword()),
         queryFieldFormat(TableArticle.ArticleInfo()),
         queryFieldFormat(TableArticle.ArticleCover()),
+        queryFieldFormat(TableArticle.ArticleContent()),
         queryFieldFormat(TableArticle.ClassType()),
         queryFieldFormat(TableArticle.TagType()),
         queryFieldFormat(TableArticle.IsPublish()),
