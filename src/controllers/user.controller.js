@@ -69,7 +69,7 @@ const loginOut = async (req, res) => {
  */
 const updatePassword = async (req, res) => {
     try {
-        let {oldPass, newPass, checkPass} = req.body
+        let {oldPass = '', newPass = '', checkPass = ''} = req.body
 
         let {userId} = req.data
 
@@ -92,7 +92,7 @@ const updatePassword = async (req, res) => {
  */
 const updateUserInfo = async (req, res) => {
     try {
-        let {avatar = '', signature = '', email = '', userId} = req.body
+        let {avatar = '', signature = '', email = '', userId = ''} = req.body
 
         if (!userId.trim()) {
             return res.json({

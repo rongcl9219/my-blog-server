@@ -42,7 +42,10 @@ app.use(function (req, res, next) {
     if (/^(\/admin)/.test(path)) {
         let token = req.headers['authorization']
         if (!token) {
-            return next()
+            return res.json({
+                code: TOKEN_INVALID,
+                msg: '无效的token'
+            })
         } else {
             verifyToken(token).then((data) => {
                 req.data = data

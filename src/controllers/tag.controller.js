@@ -26,9 +26,9 @@ const getTagList = async (req, res) => {
  */
 const newTag = async (req, res) => {
     try {
-        let {tagName, classType, tagDesc = ''} = req.body
+        let {tagName = '', classType = '', tagDesc = ''} = req.body
 
-        if (!tagName.trim()) {
+        if (!tagName.trim() || !classType.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 
@@ -45,9 +45,9 @@ const newTag = async (req, res) => {
  */
 const updateTag = async (req, res) => {
     try {
-        let {tagId, tagName, classType, tagDesc = ''} = req.body
+        let {tagId = '', tagName = '', classType = '', tagDesc = ''} = req.body
 
-        if (!tagId || !tagName.trim()) {
+        if (!tagId || !tagName.trim() || !classType.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 

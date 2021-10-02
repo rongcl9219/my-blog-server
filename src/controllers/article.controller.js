@@ -26,13 +26,13 @@ const getArticleList = async (req, res) => {
 const newArticle = async (req, res) => {
     try {
         let {
-            articleTitle,
+            articleTitle = '',
             articleSubtitle = '',
             articleKeyword = '',
-            articleInfo,
-            articleCover,
-            classType,
-            tagType
+            articleInfo = '',
+            articleCover = '',
+            classType = '',
+            tagType = ''
         } = req.body
 
         let {userId} = req.data
@@ -55,14 +55,14 @@ const newArticle = async (req, res) => {
 const editArticle = async (req, res) => {
     try {
         let {
-            articleId,
-            articleTitle,
+            articleId = '',
+            articleTitle = '',
             articleSubtitle = '',
             articleKeyword = '',
-            articleInfo,
-            articleCover,
-            classType,
-            tagType
+            articleInfo = '',
+            articleCover = '',
+            classType = '',
+            tagType = ''
         } = req.body
 
         if (!articleId.trim() || !articleTitle.trim() || !articleInfo.trim() || !articleCover.trim() || !classType.trim() || !tagType.trim()) {
@@ -101,7 +101,7 @@ const saveContent = async (req, res) => {
  */
 const deleteArticle = async (req, res) => {
     try {
-        let {articleId} = req.query
+        let {articleId = ''} = req.query
 
         if (!articleId.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
@@ -120,7 +120,7 @@ const deleteArticle = async (req, res) => {
  */
 const recoverArticle = async (req, res) => {
     try {
-        let {articleId} = req.query
+        let {articleId = ''} = req.query
 
         if (!articleId.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
@@ -139,7 +139,7 @@ const recoverArticle = async (req, res) => {
  */
 const updatePublish = async (req, res) => {
     try {
-        let {articleId, isPublish} = req.query
+        let {articleId = '', isPublish} = req.query
 
         if (!articleId.trim() && (isPublish != 0 || isPublish != 1)) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
@@ -158,7 +158,7 @@ const updatePublish = async (req, res) => {
  */
 const getArticleInfo = async (req, res) => {
     try {
-        let {articleId} = req.query
+        let {articleId = ''} = req.query
 
         if (!articleId.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
@@ -177,7 +177,7 @@ const getArticleInfo = async (req, res) => {
  */
 const getContent = async (req, res) => {
     try {
-        let {articleId} = req.query
+        let {articleId = ''} = req.query
 
         if (!articleId.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
