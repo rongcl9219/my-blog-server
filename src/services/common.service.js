@@ -1,7 +1,7 @@
 /**
  * @description commonService
  */
-const {userModel} = require('../models/index')
+const {userModel, tagModel, classModel, articleModel} = require('../models/index')
 const {initValidCode} = require('../utils/tool')
 const {success} = require("../utils/resultHelper")
 const {createToken} = require('../utils/token')
@@ -52,8 +52,26 @@ const getUploadToken = (keys, thumbnail) => {
     return success(tokenArr)
 }
 
+/**
+ * 获取侧边栏信息
+ */
+const getAsideInfo = async () => {
+    const tagList = await tagModel.getTags()
+
+    const classList = await classModel.getClass()
+
+    const articleCount = await articleModel.getArticleCount()
+
+    return success({
+        tagList,
+        classList,
+        articleCount
+    })
+}
+
 module.exports = {
     validCode,
     refreshToken,
-    getUploadToken
+    getUploadToken,
+    getAsideInfo
 }

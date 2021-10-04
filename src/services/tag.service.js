@@ -2,7 +2,7 @@
  * @description tagService
  */
 
-const {tagModle} = require('../models/index')
+const {tagModel} = require('../models/index')
 const {success} = require('../utils/resultHelper')
 const {dateFormat, checkNumber} = require('../utils/tool')
 
@@ -18,7 +18,7 @@ const getTagList = async (page, pageSize) => {
 
     let pageNum = (page - 1) * pageSize
 
-    let result = await tagModle.getTagList(pageNum, pageSize)
+    let result = await tagModel.getTagList(pageNum, pageSize)
 
     let index = 1
     result.tagList.map(item => {
@@ -47,7 +47,7 @@ const getTagList = async (page, pageSize) => {
  * @returns {Promise<{data: string, flag: boolean}>}
  */
 const newTag = async (tagName, classType, tagDesc) => {
-    await tagModle.newTag(tagName, classType, tagDesc)
+    await tagModel.newTag(tagName, classType, tagDesc)
 
     return success()
 }
@@ -61,7 +61,7 @@ const newTag = async (tagName, classType, tagDesc) => {
  * @returns {Promise<{data: string, flag: boolean}>}
  */
 const updateTag = async (tagId, tagName, classType, tagDesc) => {
-    await tagModle.updateTag(tagId, tagName, classType, tagDesc)
+    await tagModel.updateTag(tagId, tagName, classType, tagDesc)
 
     return success()
 }
@@ -72,7 +72,7 @@ const updateTag = async (tagId, tagName, classType, tagDesc) => {
  * @returns {Promise<{data: string, flag: boolean}>}
  */
 const deleteTag = async tagId => {
-    await tagModle.deleteTag(tagId)
+    await tagModel.deleteTag(tagId)
 
     return success()
 }
@@ -83,7 +83,7 @@ const deleteTag = async tagId => {
  * @returns {Promise<{data: string, flag: boolean}>}
  */
 const getTagInfo = async tagId => {
-    let result = await tagModle.getTagInfo(tagId)
+    let result = await tagModel.getTagInfo(tagId)
 
     return success(result)
 }
@@ -93,7 +93,7 @@ const getTagInfo = async tagId => {
  * @returns {Promise<{data: string, flag: boolean}>}
  */
 const getAllTag = async () => {
-    let result = await tagModle.getAllTag()
+    let result = await tagModel.getAllTag()
 
     return success(result)
 }

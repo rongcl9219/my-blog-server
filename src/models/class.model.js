@@ -156,11 +156,26 @@ const getAllClass = async (classIds) => {
     return classList
 }
 
+const getClass = async () => {
+    let selectArr = [
+        queryFieldFormat(TableClass.ClassId()),
+        queryFieldFormat(TableClass.ClassName())
+    ]
+
+    let selectSql = `select ${selectArr.join(',')} from ${TableClass.TableName}`
+
+
+    let classList = await mysql.query(selectSql)
+
+    return classList
+}
+
 module.exports = {
     getClassList,
     newClass,
     updateClass,
     deleteClass,
     getClassInfo,
-    getAllClass
+    getAllClass,
+    getClass
 }

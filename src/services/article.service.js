@@ -1,7 +1,7 @@
 /**
  * @description articleService
  */
-const {articleModel, classModel, tagModle, userModel} = require('../models/index')
+const {articleModel, classModel, tagModel, userModel} = require('../models/index')
 const {success, fail, failResult} = require('../utils/resultHelper')
 const {dateFormat, checkNumber} = require('../utils/tool')
 const statusCode = require('../utils/statusCode')
@@ -28,7 +28,7 @@ const getArticleList = async (page, pageSize, query, classType, tagType, article
     if (result.articleData.length > 0) {
         let classList = await classModel.getAllClass()
 
-        let tagList = await tagModle.getAllTag()
+        let tagList = await tagModel.getAllTag()
 
         result.articleData.map(article => {
             article.createDate = dateFormat('yyyy-MM-dd hh:mm:ss', article.createDate)
@@ -149,7 +149,7 @@ const getArticleInfo = async articleId => {
     }
 
     result.classTypeList = await classModel.getAllClass(result.classType.split(','))
-    result.tagTypeList = await tagModle.getAllTag(result.tagType.split(','))
+    result.tagTypeList = await tagModel.getAllTag(result.tagType.split(','))
 
     return success(result)
 }

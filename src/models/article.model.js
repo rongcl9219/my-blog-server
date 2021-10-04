@@ -258,6 +258,16 @@ const getContent = async articleId => {
     return content
 }
 
+/**
+ * 获取文章总数
+ * @returns {Promise<unknown>}
+ */
+const getArticleCount = async () => {
+    const count = await mysql.queryCount(`select ${TableArticle.ArticleId()} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1`)
+
+    return count
+}
+
 module.exports = {
     getArticleList,
     newArticle,
@@ -267,5 +277,6 @@ module.exports = {
     recoverArticle,
     updatePublish,
     getArticleInfo,
-    getContent
+    getContent,
+    getArticleCount
 }

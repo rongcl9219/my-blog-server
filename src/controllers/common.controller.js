@@ -53,8 +53,23 @@ const getUploadToken = (req, res) => {
     }
 }
 
+/**
+ * 获取侧边栏信息
+ */
+const getAsideInfo = async (req, res) => {
+    try {
+        const result = await commonService.getAsideInfo()
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        console.log(e);
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     initValidCode,
     refreshToken,
-    getUploadToken
+    getUploadToken,
+    getAsideInfo
 }

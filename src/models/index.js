@@ -9,7 +9,7 @@ const userModel = require('./user.model')
 
 const classModel = require('./class.model')
 
-const tagModle = require('./tag.model')
+const tagModel = require('./tag.model')
 
 const webInfoModel = require('./webInfo.model')
 
@@ -20,7 +20,7 @@ module.exports = {
     commonModel,
     userModel,
     classModel,
-    tagModle,
+    tagModel,
     webInfoModel,
     articleModel
 }

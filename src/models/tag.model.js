@@ -151,11 +151,25 @@ const getAllTag = async (tagIds) => {
     return tagList
 }
 
+const getTags = async () => {
+    let selectArr = [
+        queryFieldFormat(TableTag.TagId()),
+        queryFieldFormat(TableTag.TagName())
+    ]
+
+    let selectSql = `select ${selectArr.join(',')} from ${TableTag.TableName}`
+
+    let tagList = await mysql.query(selectSql)
+
+    return tagList
+}
+
 module.exports = {
     getTagList,
     newTag,
     updateTag,
     deleteTag,
     getTagInfo,
-    getAllTag
+    getAllTag,
+    getTags
 }
