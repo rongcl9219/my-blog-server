@@ -7,6 +7,7 @@ const {success} = require("../utils/resultHelper")
 const {createToken} = require('../utils/token')
 const {encryptToken} = require('../utils/encrypt')
 const {getFileUrl, createUploadToken} = require('../utils/qiniu')
+const {commonModel} = require("../models");
 
 /**
  * 生成验证码
@@ -69,9 +70,50 @@ const getAsideInfo = async () => {
     })
 }
 
+/**
+ * 获取文章评论
+ * @param articleId
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const getComment = async articleId => {
+    const commentList = await commonModel.getComment(articleId)
+    const commentCount = commentList.length
+    let arr = []
+    commentList.map(parent => {
+        if (parent.commentLevel === 1) {
+            parent.children = commentList.filter(child => {
+                return parent.commentId === child.parentCommentId
+            });
+            arr.push(parent);
+        }
+    });
+
+    return success({
+        commentList: arr,
+        count: commentCount
+    })
+}
+
+/**
+ * 添加评论和回复
+ * @param data
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const addComment = async (data) => {
+    data.parentCommentId = data.parentCommentId || 0
+
+    data.replyCommentId = data.replyCommentId || 0
+
+    await commonModel.addComment(data)
+
+    return success()
+}
+
 module.exports = {
     validCode,
     refreshToken,
     getUploadToken,
-    getAsideInfo
+    getAsideInfo,
+    getComment,
+    addComment
 }

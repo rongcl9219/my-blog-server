@@ -4,7 +4,7 @@
 
 const {commonService} = require('../services/index')
 const statusCode = require('../utils/statusCode')
-const {successResult, failResult, returnResult} = require('../utils/resultHelper')
+const {failResult, returnResult, successResult} = require('../utils/resultHelper')
 
 /**
  * 生成登录验证码
@@ -67,9 +67,51 @@ const getAsideInfo = async (req, res) => {
     }
 }
 
+/**
+ * 获取文章评论
+ */
+const getComment = async (req, res) => {
+    try {
+        const {articleId = ''} = req.query
+
+        if (!articleId.trim()) {
+            return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
+        }
+
+        const result = await commonService.getComment(articleId)
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        console.log(e);
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
+/**
+ * 添加评论和回复
+ */
+const addComment = async (req, res) => {
+    try {
+        const {userName, content, articleId, commentLevel, parentCommentId = '', parentCommentUserName = '', replyCommentId = '', replyCommentUserName = ''} = req.body
+
+        if (!userName.trim() || !content.trim() || !articleId.trim()) {
+            return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
+        }
+
+        await commonService.addComment({userName, content, articleId, commentLevel, parentCommentId, parentCommentUserName, replyCommentId, replyCommentUserName})
+
+        return res.json(successResult())
+    } catch (e) {
+        console.log(e);
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     initValidCode,
     refreshToken,
     getUploadToken,
-    getAsideInfo
+    getAsideInfo,
+    getComment,
+    addComment
 }

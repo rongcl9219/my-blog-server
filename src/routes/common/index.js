@@ -27,4 +27,14 @@ router.get('/getWebInfo', webInfoController.getWebInfo)
  */
 router.get('/getAsideInfo', commonController.getAsideInfo)
 
+/**
+ * 获取文章评论
+ */
+router.get('/getComment', commonController.getComment)
+
+/**
+ * 添加评论和回复
+ */
+router.post('/addComment', commonController.addComment)
+
 module.exports = router;
