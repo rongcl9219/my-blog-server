@@ -7,4 +7,9 @@ const router = express.Router()
  */
 router.get('/getAllClass', classController.getAllClass)
 
+/**
+ * 获取分类
+ */
+router.get('/getClass', classController.getClass)
+
 module.exports = router;

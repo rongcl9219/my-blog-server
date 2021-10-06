@@ -110,11 +110,25 @@ const getAllClass = async (req, res) => {
     }
 }
 
+/**
+ * 获取分类
+ */
+const getClass = async (req, res) => {
+    try {
+        const result = await classService.getClass()
+
+        return res.json(successResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     getClassList,
     newClass,
     updateClass,
     deleteClass,
     getClassInfo,
-    getAllClass
+    getAllClass,
+    getClass
 }

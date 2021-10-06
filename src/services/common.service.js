@@ -8,6 +8,7 @@ const {createToken} = require('../utils/token')
 const {encryptToken} = require('../utils/encrypt')
 const {getFileUrl, createUploadToken} = require('../utils/qiniu')
 const {commonModel} = require("../models");
+const classService = require("./class.service");
 
 /**
  * 生成验证码
@@ -59,7 +60,7 @@ const getUploadToken = (keys, thumbnail) => {
 const getAsideInfo = async () => {
     const tagList = await tagModel.getTags()
 
-    const classList = await classModel.getClass()
+    const classList = await classService.getClass()
 
     const articleCount = await articleModel.getArticleCount()
 

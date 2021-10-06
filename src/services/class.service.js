@@ -5,6 +5,7 @@
 const {classModel} = require('../models/index')
 const {success} = require('../utils/resultHelper')
 const {dateFormat, checkNumber} = require('../utils/tool')
+const {articleModel} = require("../models");
 
 /**
  * 获取分类列表
@@ -100,11 +101,35 @@ const getAllClass = async () => {
     return success(result)
 }
 
+/**
+ * 获取分类
+ * @returns {Promise<*>}
+ */
+const getClass = async () => {
+    let classData = await classModel.getClass()
+
+    let articleData = await articleModel.getArticles()
+
+    classData.map(c => {
+        let count = 0
+        articleData.map(a => {
+            let classType = ',' + a.classType + ','
+            if (classType.indexOf(`,${c.classId},`) > -1) {
+                count++
+            }
+        })
+        c.count = count
+    })
+
+    return classData
+}
+
 module.exports = {
     getClassList,
     newClass,
     updateClass,
     deleteClass,
     getClassInfo,
-    getAllClass
+    getAllClass,
+    getClass
 }
