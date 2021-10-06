@@ -4,7 +4,7 @@
 
 const statusCode = require('../utils/statusCode')
 const {webInfoService} = require('../services/index')
-const {successResult, failResult, returnResult} = require('../utils/resultHelper')
+const {successResult, failResult} = require('../utils/resultHelper')
 
 /**
  * 获取网站信息
@@ -13,7 +13,7 @@ const getWebInfo = async (req, res) => {
     try {
         let result = await webInfoService.getWebInfo()
 
-        return res.json(returnResult(result))
+        return res.json(successResult(result))
     } catch (e) {
         return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
     }

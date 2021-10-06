@@ -9,7 +9,7 @@ const mysql = require('../db/mysql')
 
 /**
  * 获取网站信息
- * @returns {Promise<{data: string, flag: boolean}>}
+ * @returns {Promise<{}>}
  */
 const getWebInfo = async () => {
     let webParams = await webInfoModel.getWebInfo()
@@ -25,7 +25,7 @@ const getWebInfo = async () => {
         }
     })
 
-    return success({paramData})
+    return {paramData}
 }
 
 /**

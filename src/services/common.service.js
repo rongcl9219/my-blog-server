@@ -1,14 +1,13 @@
 /**
  * @description commonService
  */
-const {userModel, tagModel, classModel, articleModel} = require('../models/index')
+const {userModel, tagModel, classModel, articleModel, commonModel, webInfoModel} = require('../models/index')
 const {initValidCode, dateFormat} = require('../utils/tool')
 const {success} = require("../utils/resultHelper")
 const {createToken} = require('../utils/token')
 const {encryptToken} = require('../utils/encrypt')
 const {getFileUrl, createUploadToken} = require('../utils/qiniu')
-const {commonModel} = require("../models");
-const classService = require("./class.service");
+const webInfoService = require("./webInfo.service");
 
 /**
  * 生成验证码
@@ -58,16 +57,19 @@ const getUploadToken = (keys, thumbnail) => {
  * 获取侧边栏信息
  */
 const getAsideInfo = async () => {
-    const tagList = await tagModel.getTags()
+    const tagCount = await tagModel.getTagCount()
 
-    const classList = await classService.getClass()
+    const classCount = await classModel.getClassCount()
 
     const articleCount = await articleModel.getArticleCount()
 
+    const webInfo = await webInfoService.getWebInfo()
+
     return success({
-        tagList,
-        classList,
-        articleCount
+        articleCount,
+        classCount,
+        tagCount,
+        webInfo: webInfo.paramData
     })
 }
 

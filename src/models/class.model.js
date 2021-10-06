@@ -156,6 +156,10 @@ const getAllClass = async (classIds) => {
     return classList
 }
 
+/**
+ * 获取分类
+ * @returns {Promise<*>}
+ */
 const getClass = async () => {
     let selectArr = [
         queryFieldFormat(TableClass.ClassId()),
@@ -170,6 +174,16 @@ const getClass = async () => {
     return classList
 }
 
+/**
+ * 获取分类总数
+ * @returns {Promise<unknown>}
+ */
+const getClassCount = async () => {
+    const count = await mysql.queryCount(`select ${TableClass.ClassId()} from ${TableClass.TableName}`)
+
+    return count
+}
+
 module.exports = {
     getClassList,
     newClass,
@@ -177,5 +191,6 @@ module.exports = {
     deleteClass,
     getClassInfo,
     getAllClass,
-    getClass
+    getClass,
+    getClassCount
 }

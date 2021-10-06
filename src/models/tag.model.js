@@ -151,6 +151,10 @@ const getAllTag = async (tagIds) => {
     return tagList
 }
 
+/**
+ * 获取标签
+ * @returns {Promise<*>}
+ */
 const getTags = async () => {
     let selectArr = [
         queryFieldFormat(TableTag.TagId()),
@@ -164,6 +168,16 @@ const getTags = async () => {
     return tagList
 }
 
+/**
+ * 获取标签总数
+ * @returns {Promise<unknown>}
+ */
+const getTagCount = async () => {
+    const count = await mysql.queryCount(`select ${TableTag.TagId()} from ${TableTag.TableName}`)
+
+    return count
+}
+
 module.exports = {
     getTagList,
     newTag,
@@ -171,5 +185,6 @@ module.exports = {
     deleteTag,
     getTagInfo,
     getAllTag,
-    getTags
+    getTags,
+    getTagCount
 }
