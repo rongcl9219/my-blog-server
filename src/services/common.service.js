@@ -2,7 +2,7 @@
  * @description commonService
  */
 const {userModel, tagModel, classModel, articleModel} = require('../models/index')
-const {initValidCode} = require('../utils/tool')
+const {initValidCode, dateFormat} = require('../utils/tool')
 const {success} = require("../utils/resultHelper")
 const {createToken} = require('../utils/token')
 const {encryptToken} = require('../utils/encrypt')
@@ -110,11 +110,56 @@ const addComment = async (data) => {
     return success()
 }
 
+/**
+ * 获取时间线数据
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const getTimeLine = async () => {
+    let articleList = await articleModel.getTimeLine()
+
+    let timeArr = []
+
+    if (articleList.length > 0) {
+        timeArr = articleList.reduce((arr, cur, index, prev) => {
+            let curYear = dateFormat('yyyy', cur.createDate)
+            if (index > 0) {
+                let prevYear = dateFormat('yyyy', prev[index - 1].createDate)
+
+                if (curYear === prevYear) {
+                    arr[arr.length - 1].list.push({
+                        articleId: cur.articleId,
+                        articleTitle: cur.articleTitle,
+                        month: dateFormat('MM-dd', cur.createDate)
+                    })
+                    return arr
+                }
+            }
+            arr.push({
+                year: curYear,
+                list: [
+                    {
+                        articleId: cur.articleId,
+                        articleTitle: cur.articleTitle,
+                        month: dateFormat('MM-dd', cur.createDate)
+                    }
+                ]
+            })
+            return arr
+        }, [])
+    }
+
+    return success({
+        list: timeArr,
+        total: articleList.length
+    })
+}
+
 module.exports = {
     validCode,
     refreshToken,
     getUploadToken,
     getAsideInfo,
     getComment,
-    addComment
+    addComment,
+    getTimeLine
 }

@@ -37,4 +37,9 @@ router.get('/getComment', commonController.getComment)
  */
 router.post('/addComment', commonController.addComment)
 
+/**
+ * 获取时间线数据
+ */
+router.get('/getTimeLine', commonController.getTimeLine)
+
 module.exports = router;

@@ -278,6 +278,23 @@ const getArticles = async () => {
     return articles
 }
 
+/**
+ * 获取时间线数据
+ */
+const getTimeLine = async () => {
+    let selectArr = [
+        queryFieldFormat(TableArticle.ArticleId()),
+        queryFieldFormat(TableArticle.ArticleTitle()),
+        queryFieldFormat(TableArticle.CreateDate())
+    ]
+
+    let selectSql = `select ${selectArr.join(',')} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1 order by ${TableArticle.CreateDate()} desc`
+
+    let articleList = await mysql.query(selectSql)
+
+    return articleList
+}
+
 module.exports = {
     getArticleList,
     newArticle,
@@ -289,5 +306,6 @@ module.exports = {
     getArticleInfo,
     getContent,
     getArticleCount,
-    getArticles
+    getArticles,
+    getTimeLine
 }

@@ -107,11 +107,26 @@ const addComment = async (req, res) => {
     }
 }
 
+/**
+ * 获取时间线数据
+ */
+const getTimeLine = async (req, res) => {
+    try {
+        const result = await commonService.getTimeLine()
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        console.log(e);
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     initValidCode,
     refreshToken,
     getUploadToken,
     getAsideInfo,
     getComment,
-    addComment
+    addComment,
+    getTimeLine
 }
