@@ -6,6 +6,7 @@ const {success, fail, failResult} = require('../utils/resultHelper')
 const {dateFormat, checkNumber} = require('../utils/tool')
 const statusCode = require('../utils/statusCode')
 const {getFileUrl} = require('../utils/qiniu')
+const {articleService} = require("../services/index");
 
 /**
  * 获取文章列表
@@ -127,6 +128,10 @@ const recoverArticle = async articleId => {
  */
 const updatePublish = async (articleId, isPublish) => {
     isPublish = isPublish == 0 ? 1 : 0
+
+    if (isPublish === 1) {
+        await articleModel.recoverArticle(articleId)
+    }
 
     await articleModel.updatePublish(articleId, isPublish)
 
