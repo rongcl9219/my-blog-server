@@ -6,14 +6,13 @@ const logger = require('morgan');
 const bodyParser = require("body-parser");
 const {verifyToken, checkRefreshToken} = require('./src/utils/token')
 const {TOKEN_INVALID} = require('./src/utils/statusCode')
-
 const {adminRouter, homeRouter, testRouter} = require('./src/routes/index');
 
 let app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
