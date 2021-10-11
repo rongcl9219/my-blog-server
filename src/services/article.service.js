@@ -2,11 +2,9 @@
  * @description articleService
  */
 const {articleModel, classModel, tagModel, userModel} = require('../models/index')
-const {success, fail, failResult} = require('../utils/resultHelper')
+const {success} = require('../utils/resultHelper')
 const {dateFormat, checkNumber} = require('../utils/tool')
-const statusCode = require('../utils/statusCode')
 const {getFileUrl} = require('../utils/qiniu')
-const {articleService} = require("../services/index");
 
 /**
  * 获取文章列表
