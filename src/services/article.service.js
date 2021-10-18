@@ -168,6 +168,16 @@ const getContent = async articleId => {
     return success(result)
 }
 
+/**
+ * 获取最近发布的文章
+ * @returns {Promise<{data: string, flag: boolean}>}
+ */
+const getCurrentArticles = async () => {
+    let result = await articleModel.getCurrentArticles()
+
+    return success(result)
+}
+
 module.exports = {
     getArticleList,
     newArticle,
@@ -177,5 +187,6 @@ module.exports = {
     recoverArticle,
     updatePublish,
     getArticleInfo,
-    getContent
+    getContent,
+    getCurrentArticles
 }

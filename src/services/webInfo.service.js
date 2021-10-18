@@ -23,6 +23,13 @@ const getWebInfo = async () => {
                 key: param.param_value
             }
         }
+
+        if (param.param_key === 'WEB_BANNER') {
+            paramData[param.param_key] = {
+                url: getFileUrl(param.param_value, true, '', ''),
+                key: param.param_value
+            }
+        }
     })
 
     return {paramData}

@@ -32,4 +32,9 @@ router.get('/recoverArticle', articleController.recoverArticle)
  */
 router.get('/updatePublish', articleController.updatePublish)
 
+/**
+ * 获取最近发布的文章
+ */
+router.get('/getCurrentArticles', articleController.getCurrentArticles)
+
 module.exports = router;

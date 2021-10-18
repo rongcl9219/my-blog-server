@@ -294,6 +294,22 @@ const getTimeLine = async () => {
     return await mysql.query(selectSql)
 }
 
+/**
+ * 获取最近发布的文章
+ * @returns {Promise<*>}
+ */
+const getCurrentArticles = async () => {
+    let selectArr = [
+        queryFieldFormat(TableArticle.ArticleId()),
+        queryFieldFormat(TableArticle.ArticleTitle()),
+        queryFieldFormat(TableArticle.CreateDate())
+    ]
+
+    let selectSql = `select ${selectArr.join(',')} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1 order by ${TableArticle.CreateDate()} desc limit ?,?`
+
+    return await mysql.query(selectSql, [0, 10])
+}
+
 module.exports = {
     getArticleList,
     newArticle,
@@ -306,5 +322,6 @@ module.exports = {
     getContent,
     getArticleCount,
     getArticles,
-    getTimeLine
+    getTimeLine,
+    getCurrentArticles
 }

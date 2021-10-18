@@ -191,6 +191,19 @@ const getContent = async (req, res) => {
     }
 }
 
+/**
+ * 获取最近发布的文章
+ */
+const getCurrentArticles = async (req, res) => {
+    try {
+        let result = await articleService.getCurrentArticles()
+
+        return res.json(returnResult(result))
+    } catch (e) {
+        return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
+    }
+}
+
 module.exports = {
     getArticleList,
     newArticle,
@@ -200,5 +213,6 @@ module.exports = {
     recoverArticle,
     updatePublish,
     getArticleInfo,
-    getContent
+    getContent,
+    getCurrentArticles
 }
