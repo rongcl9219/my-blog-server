@@ -45,9 +45,9 @@ const newClass = async (req, res) => {
  */
 const updateClass = async (req, res) => {
     try {
-        let {classId = '', classCode = '', className = '', classType = 0, classDesc = ''} = req.body
+        let {classId, classCode = '', className = '', classType = 0, classDesc = ''} = req.body
 
-        if (!classId.trim() || !classCode.trim() || !className.trim()) {
+        if (!classId || !classCode.trim() || !className.trim()) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 
