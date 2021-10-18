@@ -11,7 +11,7 @@ const test = async (req, res, next) => {
 
     return res.json({
         code: 200,
-        msg: 'test',
+        msg: 'test build',
         data: data
     })
 }
