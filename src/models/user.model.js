@@ -1,5 +1,5 @@
 /**
- * @description userModule
+ * @description userModel
  */
 
 const mysql = require('../db/mysql')
@@ -25,21 +25,16 @@ const login = async username => {
 
     let selectSql = `select ${queryArr.join(',')} from ${TableUser.TableName} where ${TableUser.UserName()} = '${username}'`
 
-    let result = await mysql.queryOne(selectSql)
-
-    return result
+    return await mysql.queryOne(selectSql)
 }
 
 /**
  * 修改登录次数
- * @param username 用户名
- * @param loginTime 登录次数
- * @param allowLoginDate 允许登录时间
- * @param lastLoginDate 最后登录时间
+ * @param updateData
  * @returns {Promise<unknown>}
  */
 const updateLoginTime = async (updateData) => {
-    let {username, loginTime, allowLoginDate, lastLoginDate} = {...updateData}
+    let {username, loginTime, allowLoginDate, lastLoginDate} = updateData
     let updateArr = [
         updateFieldFormat(TableUser.LoginTime())
     ]
@@ -69,7 +64,9 @@ const updateLoginTime = async (updateData) => {
 
 /**
  * 修改token
- * @param userId 用户id
+ * @param userId
+ * @param accessToken
+ * @param refreshToken
  * @returns {Promise<void>}
  */
 const updateToken = async (userId, {accessToken = '', refreshToken = ''}) => {
@@ -96,9 +93,7 @@ const getUserInfo = async userId => {
 
     let selectSql = `select ${queryArr.join(',')} from ${TableUser.TableName} where ${TableUser.UserId()} = '${userId}'`
 
-    let result = await mysql.queryOne(selectSql)
-
-    return result
+    return await mysql.queryOne(selectSql)
 }
 
 /**
@@ -220,9 +215,7 @@ const newUser = async userInfo => {
 const checkAdmin = async () => {
     let selectSql = `select ${queryFieldFormat(TableUser.UserId())} from ${TableUser.TableName} where ${TableUser.UserName()} = 'admin'`
 
-    let result = await mysql.queryOne(selectSql)
-
-    return result
+    return await mysql.queryOne(selectSql)
 }
 
 module.exports = {

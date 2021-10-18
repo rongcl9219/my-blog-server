@@ -1,5 +1,5 @@
 /**
- * @description sysClassModule
+ * @description classModel
  */
 
 const mysql = require('../db/mysql')
@@ -123,9 +123,7 @@ const getClassInfo = async classId => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableClass.TableName} where ${TableClass.ClassId()} = ?`
 
-    let result = await mysql.queryOne(selectSql, [classId])
-
-    return result
+    return await mysql.queryOne(selectSql, [classId])
 }
 
 /**
@@ -151,9 +149,7 @@ const getAllClass = async (classIds) => {
         selectData.push(classIds)
     }
 
-    let classList = await mysql.query(selectSql, selectData)
-
-    return classList
+    return await mysql.query(selectSql, selectData)
 }
 
 /**
@@ -168,10 +164,7 @@ const getClass = async () => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableClass.TableName}`
 
-
-    let classList = await mysql.query(selectSql)
-
-    return classList
+    return await mysql.query(selectSql)
 }
 
 /**
@@ -179,9 +172,8 @@ const getClass = async () => {
  * @returns {Promise<unknown>}
  */
 const getClassCount = async () => {
-    const count = await mysql.queryCount(`select ${TableClass.ClassId()} from ${TableClass.TableName}`)
-
-    return count
+    const sql = `select ${TableClass.ClassId()} from ${TableClass.TableName}`
+    return await mysql.queryCount(sql)
 }
 
 module.exports = {

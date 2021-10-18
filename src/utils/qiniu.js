@@ -77,7 +77,9 @@ const createUploadToken = key => {
 /**
  * 上传文件
  * @param fileStream (可读文件流)
+ * @param isImg 是否是图片
  * @param fName (文件名)
+ * @param thumbnail
  * @returns {Promise<unknown>}
  */
 const uploadFile = (fileStream, isImg = false, fName, thumbnail) => {
@@ -92,7 +94,7 @@ const uploadFile = (fileStream, isImg = false, fName, thumbnail) => {
                 reject(respErr)
             }
 
-            if (respInfo.statusCode == 200) {
+            if (respInfo.statusCode === 200) {
                 let fileName = respBody.fprefix + respBody.ext
                 respBody.url = getFileUrl(key, isImg, fileName, thumbnail)
                 resolve(respBody)
@@ -120,7 +122,7 @@ const deleteFiles = (keys) => {
                 reject(err)
             } else {
                 // 200 is success, 298 is part success
-                if (parseInt(respInfo.statusCode / 100) == 2) {
+                if (respInfo.statusCode === 2) {
                     resolve(respBody)
                 } else {
                     resolve(false)

@@ -42,14 +42,11 @@ gulp.task('views', function () {
         .pipe(gulp.dest('dist/views'));
 })
 
+/**
+ * 打包其他文件
+ */
 gulp.task('others', function () {
     return gulp.src(['app.js', 'package.json', 'package-lock.json'])
-        .pipe(gulp.dest('dist'));
-})
-
-gulp.task('zip', function () {
-    return gulp.src(['dist/**'])
-        .pipe(zip('dist.zip'))
         .pipe(gulp.dest('dist'));
 })
 

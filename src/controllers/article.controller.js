@@ -1,5 +1,5 @@
 /**
- * @description classController
+ * @description aritcleController
  */
 const statusCode = require('../utils/statusCode')
 const {articleService} = require('../services/index')
@@ -140,8 +140,8 @@ const recoverArticle = async (req, res) => {
 const updatePublish = async (req, res) => {
     try {
         let {articleId = '', isPublish} = req.query
-
-        if (!articleId.trim() && (isPublish != 0 || isPublish != 1)) {
+        isPublish = String(isPublish)
+        if (!articleId.trim() && (isPublish !== '0' || isPublish !== '1')) {
             return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
 

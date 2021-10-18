@@ -29,11 +29,7 @@ const encrypt = (password) => {
 const passwordEqual = (password, salt, hash) => {
     const newHash = md5(password + salt)
 
-    if (newHash === hash) {
-        return true
-    }
-
-    return false
+    return newHash === hash
 }
 
 /**
@@ -42,14 +38,13 @@ const passwordEqual = (password, salt, hash) => {
  * @returns {string}
  */
 const encryptToken = (token) => {
-    const md5Token = md5(token + TOKEN_KEY)
-
-    return md5Token
+    return md5(token + TOKEN_KEY)
 }
 
 /**
  * md5加密
  * @param str 需要加密的字符串
+ * @param key
  * @returns {string}
  */
 const md5 = (str, key = '') => {

@@ -1,5 +1,5 @@
 /**
- * @description webInfoModule
+ * @description webInfoModel
  */
 
 const mysql = require('../db/mysql')
@@ -9,9 +9,7 @@ const mysql = require('../db/mysql')
  * @returns {Promise<*>}
  */
 const getWebInfo = async () => {
-    let result = await mysql.query(`select * from web_info`)
-
-    return result
+    return await mysql.query(`select * from web_info`)
 }
 
 /**

@@ -31,7 +31,7 @@ const getWebInfo = async () => {
 /**
  * 保存网站信息
  * @param paramObj
- * @returns {Promise<void>}
+ * @returns {Promise<{data: string, flag: boolean}>}
  */
 const saveWebInfo = async paramObj => {
     let insertSqlArr = []

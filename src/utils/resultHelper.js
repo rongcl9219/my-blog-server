@@ -57,6 +57,7 @@ const success = (data = 'success') => {
  * 失败返回 (Model层使用)
  * @param msg
  * @param code
+ * @param data
  * @returns {{msg: string, code: number, flag: boolean}}
  */
 const fail = (msg = 'fail', code = -200, data) => {

@@ -1,5 +1,5 @@
 /**
- * @description commonModule
+ * @description commonModel
  */
 
 const mysql = require('../db/mysql')
@@ -16,9 +16,7 @@ const {queryFieldFormat} = require('../utils/stringFormat')
 const checkToken = async userId => {
     let selectSql = `select ${queryFieldFormat(TableUser.AccessToken())}, ${queryFieldFormat(TableUser.RefreshToken())} from ${TableUser.TableName} where ${TableUser.UserId()} = ?`
 
-    let result = await mysql.queryOne(selectSql, [userId])
-
-    return result
+    return await mysql.queryOne(selectSql, [userId])
 }
 
 /**
@@ -43,9 +41,7 @@ const getComment = async articleId => {
 
     const selectSql = `select ${selectArr.join(',')} from ${TableComment.TableName} where ${whereStr} order by create_date desc`
 
-    const commentList = await mysql.query(selectSql, [articleId])
-
-    return commentList
+    return await mysql.query(selectSql, [articleId])
 }
 
 /**

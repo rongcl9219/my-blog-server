@@ -1,5 +1,5 @@
 /**
- * @description sysTagModule
+ * @description tagModel
  */
 
 const mysql = require('../db/mysql')
@@ -117,9 +117,7 @@ const getTagInfo = async tagId => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableTag.TableName} where ${TableTag.TagId()} = ?`
 
-    let result = await mysql.queryOne(selectSql, [tagId])
-
-    return result
+    return await mysql.queryOne(selectSql, [tagId])
 }
 
 /**
@@ -146,9 +144,7 @@ const getAllTag = async (tagIds) => {
         selectData.push(tagIds)
     }
 
-    let tagList = await mysql.query(selectSql, selectData)
-
-    return tagList
+    return await mysql.query(selectSql, selectData)
 }
 
 /**
@@ -163,9 +159,7 @@ const getTags = async () => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableTag.TableName}`
 
-    let tagList = await mysql.query(selectSql)
-
-    return tagList
+    return await mysql.query(selectSql)
 }
 
 /**
@@ -173,9 +167,8 @@ const getTags = async () => {
  * @returns {Promise<unknown>}
  */
 const getTagCount = async () => {
-    const count = await mysql.queryCount(`select ${TableTag.TagId()} from ${TableTag.TableName}`)
-
-    return count
+    const sql = `select ${TableTag.TagId()} from ${TableTag.TableName}`
+    return await mysql.queryCount(sql)
 }
 
 module.exports = {

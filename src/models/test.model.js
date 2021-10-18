@@ -1,5 +1,5 @@
 /**
- * @description module层，用于和db交互
+ * @description model层，用于和db交互
  */
 
 const mysql = require('../db/mysql')
@@ -15,9 +15,7 @@ const test = async () => {
 
     let selectSql = `select ${queryArr.join(',')} from ${TableUser.TableName}`
 
-    let result = await mysql.query(selectSql)
-
-    return result
+    return await mysql.query(selectSql)
 }
 
 module.exports = {

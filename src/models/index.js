@@ -1,5 +1,5 @@
 /**
- * 测试Service
+ * 测试Model
  */
 const testModel = require('./test.model')
 

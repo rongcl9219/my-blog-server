@@ -1,5 +1,5 @@
 /**
- * @description articleModule
+ * @description articleModel
  */
 
 const mysql = require('../db/mysql')
@@ -81,8 +81,10 @@ const getArticleList = async (page, pageSize, query, classType, tagType, article
 
 /**
  * 新增文章
+ * @param newInfo
+ * @returns {Promise<void>}
  */
-const newArticle = async (newInfo) => {
+const newArticle = async newInfo => {
     const {articleTitle, articleSubtitle, articleKeyword, articleInfo, articleCover, classType, tagType, userId, username} = newInfo
 
     let insertArr = [
@@ -120,8 +122,10 @@ const newArticle = async (newInfo) => {
 
 /**
  * 编辑文章基础信息
+ * @param editInfo
+ * @returns {Promise<void>}
  */
-const editArticle = async (editInfo) => {
+const editArticle = async editInfo => {
     const {articleId, articleTitle, articleSubtitle, articleKeyword, articleInfo, articleCover, classType, tagType} = editInfo
 
     let updateArr = [
@@ -154,6 +158,9 @@ const editArticle = async (editInfo) => {
 
 /**
  * 保存文章内容
+ * @param articleId
+ * @param articledContent
+ * @returns {Promise<void>}
  */
 const saveContent = async (articleId, articledContent) => {
     let updateArr = [
@@ -235,9 +242,7 @@ const getArticleInfo = async articleId => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableArticle.TableName} where ${TableArticle.ArticleId()} = ?`
 
-    let articleInfo = await mysql.queryOne(selectSql, [articleId])
-
-    return articleInfo
+    return await mysql.queryOne(selectSql, [articleId])
 }
 
 /**
@@ -253,9 +258,7 @@ const getContent = async articleId => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableArticle.TableName} where ${TableArticle.ArticleId()} = ?`
 
-    let content = await mysql.queryOne(selectSql, [articleId])
-
-    return content
+    return await mysql.queryOne(selectSql, [articleId])
 }
 
 /**
@@ -263,9 +266,8 @@ const getContent = async articleId => {
  * @returns {Promise<unknown>}
  */
 const getArticleCount = async () => {
-    const count = await mysql.queryCount(`select ${TableArticle.ArticleId()} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1`)
-
-    return count
+    const sql = `select ${TableArticle.ArticleId()} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1`
+    return await mysql.queryCount(sql)
 }
 
 /**
@@ -273,9 +275,8 @@ const getArticleCount = async () => {
  * @returns {Promise<*>}
  */
 const getArticles = async () => {
-    let articles = await mysql.query(`select ${queryFieldFormat(TableArticle.ClassType())} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1`)
-
-    return articles
+    const sql = `select ${queryFieldFormat(TableArticle.ClassType())} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1`
+    return await mysql.query(sql)
 }
 
 /**
@@ -290,9 +291,7 @@ const getTimeLine = async () => {
 
     let selectSql = `select ${selectArr.join(',')} from ${TableArticle.TableName} where ${TableArticle.IsDelete()} = 0 and ${TableArticle.IsPublish()} = 1 order by ${TableArticle.CreateDate()} desc`
 
-    let articleList = await mysql.query(selectSql)
-
-    return articleList
+    return await mysql.query(selectSql)
 }
 
 module.exports = {

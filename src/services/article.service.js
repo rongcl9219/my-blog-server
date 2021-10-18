@@ -61,7 +61,7 @@ const getArticleList = async (page, pageSize, query, classType, tagType, article
  * @param newInfo
  * @returns {Promise<{data: string, flag: boolean}>}
  */
-const newArticle = async (newInfo) => {
+const newArticle = async newInfo => {
     let {userId} = newInfo
 
     let userInfo = await userModel.getUserInfo(userId)
@@ -78,7 +78,7 @@ const newArticle = async (newInfo) => {
  * @param editInfo
  * @returns {Promise<{data: string, flag: boolean}>}
  */
-const editArticle = async (editInfo) => {
+const editArticle = async editInfo => {
     await articleModel.editArticle(editInfo)
 
     return success()
@@ -125,7 +125,7 @@ const recoverArticle = async articleId => {
  * @returns {Promise<{data: string, flag: boolean}>}
  */
 const updatePublish = async (articleId, isPublish) => {
-    isPublish = isPublish == 0 ? 1 : 0
+    isPublish = isPublish === '0' ? 1 : 0
 
     if (isPublish === 1) {
         await articleModel.recoverArticle(articleId)

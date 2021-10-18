@@ -8,7 +8,6 @@ const {successResult, failResult, returnResult} = require('../utils/resultHelper
 
 /**
  * 登录
- * @returns {Promise<*>}
  */
 const login = async (req, res) => {
     try {
@@ -28,7 +27,6 @@ const login = async (req, res) => {
 
 /**
  * 获取用户信息
- * @returns {Promise<void>}
  */
 const getUserInfo = async (req, res) => {
     try {
@@ -74,12 +72,11 @@ const updatePassword = async (req, res) => {
         let {userId} = req.data
 
         if (!newPass.trim() || newPass !== checkPass) {
-            return res.json({
-                code: statusCode.FAIL,
-                msg: '两次密码输入不一致'
-            })
+            return res.json(failResult('两次密码输入不一致', statusCode.FAIL))
         }
+
         await userService.updatePassword(userId, newPass, oldPass)
+
         return res.json(successResult())
     } catch (e) {
         return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
@@ -88,19 +85,17 @@ const updatePassword = async (req, res) => {
 
 /**
  * 修改用户信息
- * @returns {Promise<*>}
  */
 const updateUserInfo = async (req, res) => {
     try {
         let {avatar = '', signature = '', email = '', userId = ''} = req.body
 
         if (!userId.trim()) {
-            return res.json({
-                code: statusCode.PARAMS_INVALID,
-                msg: '参数错误'
-            })
+            return res.json(failResult('参数错误', statusCode.PARAMS_INVALID))
         }
+
         await userService.updateUserInfo(avatar, signature, email, userId)
+
         return res.json(successResult())
     } catch (e) {
         return res.json(failResult('error', statusCode.SYS_ERROR, {errorMsg: {stack: e.stack, message: e.message}}))
@@ -109,7 +104,6 @@ const updateUserInfo = async (req, res) => {
 
 /**
  * 初始化管理员
- * @returns {Promise<*>}
  */
 const initAdmin = async (req, res) => {
     try {

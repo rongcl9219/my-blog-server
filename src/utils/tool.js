@@ -58,7 +58,7 @@ const initValidCode = (num = 4, isArray = false, special = false) => {
 }
 
 /**
- *
+ * 检查数字
  * @param num
  * @returns {number}
  */

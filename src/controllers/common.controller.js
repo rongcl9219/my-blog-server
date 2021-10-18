@@ -1,5 +1,5 @@
 /**
- * @description userController
+ * @description commonController
  */
 
 const {commonService} = require('../services/index')

@@ -28,12 +28,13 @@ const refreshToken = async userId => {
         accessToken: encryptToken(token.accessToken),
         refreshToken: encryptToken(token.refreshToken)
     })
+
     return success(token)
 }
 
 /**
  * 获取上传token
- * @param key 文件key
+ * @param keys 文件key
  * @param thumbnail 图片处理格式名称
  * @returns {{data: string, flag: boolean}}
  */
@@ -102,7 +103,7 @@ const getComment = async articleId => {
  * @param data
  * @returns {Promise<{data: string, flag: boolean}>}
  */
-const addComment = async (data) => {
+const addComment = async data => {
     data.parentCommentId = data.parentCommentId || 0
 
     data.replyCommentId = data.replyCommentId || 0

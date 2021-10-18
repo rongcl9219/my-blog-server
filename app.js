@@ -27,7 +27,7 @@ app.all("*", function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");  // 允许跨域的域名，*代表允许任意域名跨域
     res.header("Access-Control-Allow-Headers", "content-type");    // 允许跨域的header类型
     res.header("Access-Control-Allow-Methods", "DELETE,PUT,POST,GET,OPTIONS"); // 允许跨域的请求方式
-    if (req.method.toLowerCase() == 'options') { //让options尝试请求快速结束
+    if (req.method.toLowerCase() === 'options') { //让options尝试请求快速结束
         res.send(200);
     } else {
         next();
@@ -90,14 +90,6 @@ app.use(function (err, req, res, next) {
             msg: '无效的token'
         })
     } else {
-        // set locals, only providing error in development
-        // res.locals.message = err.message;
-        // res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-        // render the error page
-        // res.status(err.status || 500);
-        // res.render('error');
-
         return res.json({
             code: err.status || 500,
             msg: err.message
