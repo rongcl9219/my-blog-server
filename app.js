@@ -33,14 +33,14 @@ app.use(function (req, res, next) {
     let path = req.path
     // 验证以 /admin 开头的所有请求
     if (/^(\/admin)/.test(path)) {
-        let token = req.headers['authorization']
-        if (!token) {
+        const accessToken = req.cookies.ak || ''
+        if (!accessToken) {
             return res.json({
                 code: TOKEN_INVALID,
                 msg: '无效的token'
             })
         } else {
-            verifyToken(token).then((data) => {
+            verifyToken(accessToken).then((data) => {
                 req.data = data
                 return next()
             }).catch(() => {
@@ -51,8 +51,9 @@ app.use(function (req, res, next) {
             })
         }
     } else if (path === '/refreshToken') {
-        const token = req.headers['authorization']
-        checkRefreshToken(token).then((data) => {
+        const accessToken = req.cookies.ak || ''
+        const refreshToken = req.headers['authorization'] || ''
+        checkRefreshToken(accessToken, refreshToken).then((data) => {
             req.data = data
             return next()
         }).catch(() => {

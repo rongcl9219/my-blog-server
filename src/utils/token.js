@@ -28,12 +28,11 @@ const createToken = userId => {
 
 /**
  * 验证token
- * @param {String} token
+ * @param {String} accessToken
  * @returns {Promise<unknown>}
  */
-const verifyToken = token => {
+const verifyToken = accessToken => {
     return new Promise((resolve, reject) => {
-        let accessToken = token.split(' ')[1]
         let info = jwt.verify(accessToken, TOKEN_KEY)
 
         checkToken(info.userId).then(tokenInfo => {
@@ -48,17 +47,17 @@ const verifyToken = token => {
 
 /**
  * 验证刷新token
- * @param token
+ * @param accessToken
+ * @param refreshToken
  * @returns {Promise<unknown>}
  */
-const checkRefreshToken = (token) => {
+const checkRefreshToken = (accessToken, refreshToken) => {
     return new Promise((resolve, reject) => {
         try {
-            if (!token) {
+            if (!accessToken || !refreshToken) {
                 reject()
             }
-            const accessToken = token.split(' ')[1]
-            const refreshToken = token.split(' ')[2]
+            refreshToken = refreshToken.split(' ')[1]
             if (!accessToken || !refreshToken) {
                 reject()
             }
