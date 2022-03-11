@@ -36,7 +36,7 @@ const verifyToken = accessToken => {
         let info = jwt.verify(accessToken, TOKEN_KEY)
 
         checkToken(info.userId).then(tokenInfo => {
-            if (encryptToken(accessToken) === tokenInfo.accessToken) {
+            if (tokenInfo && encryptToken(accessToken) === tokenInfo.accessToken) {
                 resolve(info)
             } else {
                 reject()
@@ -69,7 +69,7 @@ const checkRefreshToken = (accessToken, refreshToken) => {
             }
 
             checkToken(info.userId).then(tokenInfo => {
-                if (encryptToken(refreshToken) === tokenInfo.refreshToken) {
+                if (tokenInfo && encryptToken(refreshToken) === tokenInfo.refreshToken) {
                     resolve(info)
                 } else {
                     reject()
