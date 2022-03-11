@@ -26,7 +26,7 @@ const getWebInfo = async () => {
 
         if (param.param_key === 'WEB_BANNER') {
             paramData[param.param_key] = {
-                url: getFileUrl(param.param_value, true, '', ''),
+                url: getFileUrl(param.param_value, true, '', 'zipImage'),
                 key: param.param_value
             }
         }
