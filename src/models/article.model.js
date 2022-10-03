@@ -34,7 +34,8 @@ const getArticleList = async (page, pageSize, query, classType, tagType, article
         queryFieldFormat(TableArticle.CreateUser()),
         queryFieldFormat(TableArticle.CreateUsername()),
         queryFieldFormat(TableArticle.UpdateDate()),
-        queryFieldFormat(TableArticle.CreateDate())
+        queryFieldFormat(TableArticle.CreateDate()),
+        queryFieldFormat(TableArticle.IsDelete())
     ]
 
     let whereStr = '1=1 '
