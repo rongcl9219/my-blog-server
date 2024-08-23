@@ -59,7 +59,7 @@ function getFileUrl(key, isImg, fName, thumbnail) {
             let thumbnailUpper = thumbnail.toUpperCase()
             paramStr = QI_NIU.THUMBNAIL[thumbnailUpper] ? QI_NIU.THUMBNAIL[thumbnailUpper] : ''
         }
-    †
+    } else {
         paramStr = 'attname=' + encodeURI(fName)
     }
     paramStr = paramStr ? '-' + paramStr : ''
